@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSV Data Cleaner — Remove Duplicates, Trim, Fix Case Online | Data.Studio</title>
+<meta name="description" content="Clean CSV data online for free: trim whitespace, remove duplicate and blank rows, standardise nulls, fix text case, normalise headers and find & replace. Private, in your browser.">
+<link rel="canonical" href="https://data.studio/tools/data-cleaner.html">
+<meta property="og:title" content="Data Cleaner | Data.Studio"><meta property="og:url" content="https://data.studio/tools/data-cleaner.html"><meta property="og:site_name" content="Data.Studio">
+<meta name="theme-color" content="#0A0F1F">
+<meta name="google-adsense-account" content="ca-pub-6620975821265271">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6620975821265271" crossorigin="anonymous"></script>
+</head>
+<body data-root="../">
+<div class="topbar"><a href="https://web.works/contact" target="_blank" rel="noopener">Contact, if you are interested in this website / domain name / Sponsorship / Advertisement / Partnership →</a></div>
+<header id="site-header"></header>
+<main id="main">
+<section class="page-hero"><div class="wrap">
+  <div class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Tools</a> / Data Cleaner</div>
+  <h1>Data Cleaner</h1>
+  <p>Fix the boring problems that break analysis: stray spaces, duplicates, blank rows, inconsistent nulls and casing. Get a clean CSV and a change log.</p>
+</div></section>
+<section class="section">
+  <div class="wrap tool">
+    <div class="panel">
+      <div class="dropzone" id="dz" tabindex="0" role="button"><input type="file" accept=".csv,.tsv,.txt,text/csv">📂 Drop a CSV or <u>browse</u></div>
+      <div class="field"><label for="csv">…or paste CSV</label><textarea id="csv" class="code" spellcheck="false" style="min-height:140px"></textarea></div>
+      <h3>Cleaning steps</h3>
+      <div class="field">
+        <label class="check"><input type="checkbox" id="o-trim" checked> Trim leading/trailing spaces</label>
+        <label class="check"><input type="checkbox" id="o-collapse" checked> Collapse repeated internal spaces</label>
+        <label class="check"><input type="checkbox" id="o-nulls" checked> Standardise nulls (NA, N/A, null, none, -) to empty</label>
+        <label class="check"><input type="checkbox" id="o-blank" checked> Remove fully blank rows</label>
+        <label class="check"><input type="checkbox" id="o-dupes" checked> Remove exact duplicate rows</label>
+        <label class="check"><input type="checkbox" id="o-head"> Normalise headers to snake_case</label>
+      </div>
+      <div class="field-row"><div class="field"><label for="o-case">Text case</label><select id="o-case"><option value="">Keep as is</option><option value="lower">lowercase</option><option value="upper">UPPERCASE</option><option value="title">Title Case</option></select></div><div class="field"><label for="o-col">Apply case/replace to</label><select id="o-col"><option value="">All text columns</option></select></div></div>
+      <div class="field-row"><div class="field"><label for="o-find">Find</label><input id="o-find"></div><div class="field"><label for="o-rep">Replace with</label><input id="o-rep"></div></div>
+      <label class="check"><input type="checkbox" id="o-re"> Find is a regular expression</label>
+      <div class="btn-row mt-s"><button class="btn btn-ghost btn-sm" id="sample" type="button">Load sample</button><button class="btn btn-brand btn-sm" id="run" type="button">Clean data →</button></div>
+    </div>
+    <div>
+      <div class="panel">
+        <div class="toolbar"><button class="btn btn-brand btn-sm" id="dl" type="button">⬇ Download clean CSV</button><button class="btn btn-ghost btn-sm" id="copy" type="button">Copy</button><span class="muted" id="info" style="font-size:.88rem"></span></div>
+        <div id="log"></div>
+        <div class="table-wrap mt-s" id="out"></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section section-alt"><div class="wrap prose">
+  <h2 style="margin-top:0">Why these steps matter</h2>
+  <p>Most "wrong numbers" in reports aren't maths errors. They're data-entry noise. <code>"Canada"</code> and <code>"Canada "</code> group separately in a pivot table. A pasted row counted twice inflates revenue. <code>N/A</code> typed into a numeric column turns the whole column into text. The cleaner fixes these patterns in one pass and tells you exactly what changed.</p>
+  <ul>
+    <li><strong>Order of operations:</strong> nulls are standardised and spaces trimmed <em>before</em> duplicates are detected, so near-duplicates that differ only by whitespace are caught.</li>
+    <li><strong>Case changes</strong> apply only to text values. Numbers and dates are left untouched.</li>
+    <li><strong>Regex find & replace</strong> uses JavaScript syntax with the global flag, for example <code>\D</code> → empty to strip non-digits from phone numbers.</li>
+  </ul>
+  <p>For a deeper process, see the <a href="../guides/data-cleaning-checklist.html">data cleaning checklist</a>, then verify the result in the <a href="data-profiler.html">Data Profiler</a>.</p>
+</div></section>
+<div class="sticky-cta"><span>Cleaning a CRM or product catalogue?</span><a class="btn btn-brand btn-sm" href="../services.html?service=Cleanup#brief">Get expert cleanup</a><button class="x" aria-label="Dismiss">×</button></div>
+</main>
+<footer id="site-footer"></footer>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/site.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="../assets/js/tools.js"></script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);},clean=null;
+  var SAMPLE='Customer Name, Email ,Country,Plan,Monthly Spend\n  ana silva ,ana@example.com,Portugal,pro,49\nBen  Okafor,ben@example.com,nigeria ,Basic,19\nChen Wei,chen@example.com,China,PRO,49\n,,,,\nana silva,ana@example.com,Portugal,pro,49\nDara Singh,dara@example.com,N/A,basic,null\nEva Müller,eva@example.com,Germany,Pro,49\nBen Okafor,ben@example.com,Nigeria,Basic,19';
+  var NULLS=/^(na|n\/a|null|none|-|nan|#n\/a)$/i;
+  function title(s){return s.toLowerCase().replace(/(^|[\s\-'])(\p{L})/gu,function(m,a,b){return a+b.toUpperCase();});}
+  function snake(s){return String(s).trim().replace(/([a-z0-9])([A-Z])/g,'$1_$2').replace(/[^\w]+/g,'_').replace(/^_|_$/g,'').toLowerCase()||'column';}
+  function cols(){var p=DST.parse($('csv').value,{typed:false});$('o-col').innerHTML='<option value="">All text columns</option>'+p.fields.map(function(f){return '<option>'+DS.esc(f)+'</option>';}).join('');}
+  function run(){
+    var p=DST.parse($('csv').value,{typed:false,skipEmpty:false});
+    if(!p.fields.length){$('info').textContent='No data found.';return;}
+    var log={trim:0,collapse:0,nulls:0,blank:0,dupes:0,cased:0,replaced:0,headers:0},O={trim:$('o-trim').checked,collapse:$('o-collapse').checked,nulls:$('o-nulls').checked,blank:$('o-blank').checked,dupes:$('o-dupes').checked,head:$('o-head').checked,cs:$('o-case').value,col:$('o-col').value,find:$('o-find').value,rep:$('o-rep').value,re:$('o-re').checked};
+    var rx=null;if(O.find){try{rx=O.re?new RegExp(O.find,'g'):new RegExp(O.find.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g');}catch(e){$('info').textContent='Invalid regex: '+e.message;return;}}
+    var fields=p.fields.slice(),out=[],seen={};
+    var hdr=O.trim?fields.map(function(f){return String(f).trim();}):fields;
+    if(O.head){hdr=hdr.map(function(f){var s=snake(f);if(s!==f)log.headers++;return s;});}
+    p.rows.forEach(function(r){
+      var row={};
+      fields.forEach(function(f,i){var v=r[f]==null?'':String(r[f]),o=v;
+        if(O.trim){v=v.trim();if(v!==o)log.trim++;}
+        if(O.collapse){var c=v.replace(/\s{2,}/g,' ');if(c!==v){v=c;log.collapse++;}}
+        if(O.nulls&&NULLS.test(v.trim())){v='';log.nulls++;}
+        var target=!O.col||O.col===f;
+        if(target&&rx){var rr=v.replace(rx,O.rep);if(rr!==v){v=rr;log.replaced++;}}
+        if(target&&O.cs&&v&&DST.toNum(v)===null&&isNaN(Date.parse(v))){var cc=O.cs==='lower'?v.toLowerCase():O.cs==='upper'?v.toUpperCase():title(v);if(cc!==v){v=cc;log.cased++;}}
+        row[hdr[i]]=v;});
+      var vals=hdr.map(function(h){return row[h];});
+      if(O.blank&&vals.every(function(v){return v==='';})){log.blank++;return;}
+      if(O.dupes){var k=JSON.stringify(vals);if(seen[k]){log.dupes++;return;}seen[k]=1;}
+      out.push(row);});
+    clean={fields:hdr,rows:out};
+    var items=[['Values trimmed',log.trim],['Internal spaces collapsed',log.collapse],['Null tokens cleared',log.nulls],['Blank rows removed',log.blank],['Duplicate rows removed',log.dupes],['Values re-cased',log.cased],['Values replaced',log.replaced],['Headers renamed',log.headers]].filter(function(x){return x[1];});
+    $('log').innerHTML='<div class="kpis">'+(items.length?items:[['Changes',0]]).map(function(x){return '<div class="kpi-box"><span>'+x[0]+'</span><b class="kpi">'+x[1].toLocaleString()+'</b></div>';}).join('')+'</div>';
+    $('out').innerHTML=DST.table(out,hdr,200);
+    $('info').textContent=p.rows.length.toLocaleString()+' → '+out.length.toLocaleString()+' rows';
+  }
+  $('run').onclick=run;
+  $('sample').onclick=function(){$('csv').value=SAMPLE;cols();run();};
+  $('csv').addEventListener('change',cols);
+  $('dl').onclick=function(){if(clean)DST.download('clean-data.csv',Papa.unparse({fields:clean.fields,data:clean.rows.map(function(r){return clean.fields.map(function(f){return r[f];});})}),'text/csv;charset=utf-8');};
+  $('copy').onclick=function(){if(clean)DST.copy(Papa.unparse({fields:clean.fields,data:clean.rows.map(function(r){return clean.fields.map(function(f){return r[f];});})}),$('copy'));};
+  DST.dropzone($('dz'),$('csv'),function(){cols();run();});
+  $('csv').value=SAMPLE;cols();$('o-case').value='title';$('o-col').value='Customer Name';run();
+})();
+</script>
+</body>
+</html>

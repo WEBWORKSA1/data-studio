@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sample Size Calculator — A/B Tests & Surveys | Data.Studio</title>
+<meta name="description" content="Free sample size calculator for A/B tests (baseline rate, minimum detectable effect, significance, power, test duration) and surveys (margin of error, confidence level, population).">
+<link rel="canonical" href="https://data.studio/tools/sample-size-calculator.html">
+<meta property="og:title" content="Sample Size Calculator | Data.Studio"><meta property="og:url" content="https://data.studio/tools/sample-size-calculator.html"><meta property="og:site_name" content="Data.Studio">
+<meta name="theme-color" content="#0A0F1F">
+<meta name="google-adsense-account" content="ca-pub-6620975821265271">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6620975821265271" crossorigin="anonymous"></script>
+</head>
+<body data-root="../">
+<div class="topbar"><a href="https://web.works/contact" target="_blank" rel="noopener">Contact, if you are interested in this website / domain name / Sponsorship / Advertisement / Partnership →</a></div>
+<header id="site-header"></header>
+<main id="main">
+<section class="page-hero"><div class="wrap">
+  <div class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Tools</a> / Sample Size Calculator</div>
+  <h1>Sample Size Calculator</h1>
+  <p>Plan experiments and surveys that can actually detect what you care about, before you spend the traffic or the budget.</p>
+</div></section>
+<section class="section">
+  <div class="wrap grid g2" style="align-items:start">
+    <div class="panel">
+      <h2>A/B test sample size</h2>
+      <div class="field-row"><div class="field"><label for="base">Baseline conversion rate (%)</label><input id="base" type="number" step="0.1" min="0.01" max="99" value="5"></div><div class="field"><label for="mde">Minimum detectable effect (%)</label><input id="mde" type="number" step="0.1" min="0.01" value="10"></div></div>
+      <div class="field-row"><div class="field"><label for="mtype">Effect is</label><select id="mtype"><option value="rel">Relative (10% of 5% = 5.5%)</option><option value="abs">Absolute (5% + 10pp)</option></select></div><div class="field"><label for="var">Number of variants (incl. control)</label><select id="var"><option>2</option><option>3</option><option>4</option><option>5</option></select></div></div>
+      <div class="field-row"><div class="field"><label for="alpha">Significance level (α)</label><select id="alpha"><option value="0.10">10% (90% confidence)</option><option value="0.05" selected>5% (95% confidence)</option><option value="0.01">1% (99% confidence)</option></select></div><div class="field"><label for="power">Statistical power</label><select id="power"><option value="0.8" selected>80%</option><option value="0.85">85%</option><option value="0.9">90%</option><option value="0.95">95%</option></select></div></div>
+      <div class="field-row"><div class="field"><label for="daily">Daily visitors in test (optional)</label><input id="daily" type="number" min="0" value="2000"></div><div class="field"><label class="check" style="margin-top:30px"><input type="checkbox" id="bonf"> Bonferroni correction for >2 variants</label></div></div>
+      <div class="kpis"><div class="kpi-box"><span>Per variant</span><b class="kpi" id="n1"></b></div><div class="kpi-box"><span>Total visitors</span><b class="kpi" id="nt"></b></div><div class="kpi-box"><span>Est. duration</span><b class="kpi" id="days"></b></div></div>
+      <p class="form-note" id="ab-note"></p>
+    </div>
+    <div class="panel">
+      <h2>Survey sample size</h2>
+      <div class="field-row"><div class="field"><label for="moe">Margin of error (%)</label><input id="moe" type="number" step="0.5" min="0.5" value="5"></div><div class="field"><label for="sconf">Confidence level</label><select id="sconf"><option value="0.90">90%</option><option value="0.95" selected>95%</option><option value="0.99">99%</option></select></div></div>
+      <div class="field-row"><div class="field"><label for="pop">Population size (blank = very large)</label><input id="pop" type="number" min="1" placeholder="e.g. 12000"></div><div class="field"><label for="prop">Expected proportion (%)</label><input id="prop" type="number" min="1" max="99" value="50"></div></div>
+      <div class="field"><label for="resp">Expected response rate (%)</label><input id="resp" type="number" min="1" max="100" value="100"></div>
+      <div class="kpis"><div class="kpi-box"><span>Completed responses needed</span><b class="kpi" id="sn"></b></div><div class="kpi-box"><span>Invitations to send</span><b class="kpi" id="si"></b></div></div>
+      <p class="form-note">Use 50% expected proportion when unsure. It gives the most conservative (largest) sample.</p>
+    </div>
+  </div>
+</section>
+<section class="section section-alt"><div class="wrap prose">
+  <h2 style="margin-top:0">How the numbers are calculated</h2>
+  <p><strong>A/B tests:</strong> for baseline rate p<sub>1</sub> and target rate p<sub>2</sub>, the required sample per variant is n = [z<sub>1−α/2</sub>√(2p̄(1−p̄)) + z<sub>1−β</sub>√(p<sub>1</sub>(1−p<sub>1</sub>)+p<sub>2</sub>(1−p<sub>2</sub>))]² / (p<sub>2</sub>−p<sub>1</sub>)², where p̄ is the average of the two rates. This is the standard two-sided test for two proportions. With more than two variants, the optional Bonferroni correction divides α by the number of comparisons against control.</p>
+  <p><strong>Surveys:</strong> n₀ = z²·p(1−p)/e², adjusted for a finite population N with n = n₀/(1+(n₀−1)/N). Divide by the response rate to get the number of people to invite.</p>
+  <h3>Choosing a minimum detectable effect</h3>
+  <p>The MDE is the smallest improvement worth detecting, not the improvement you hope for. Halving the MDE roughly quadruples the sample size, so be realistic. For low-traffic sites, test bolder changes.</p>
+  <p>Once your test finishes, analyse it with the <a href="ab-test-calculator.html">A/B Test Calculator</a>.</p>
+</div></section>
+<div class="sticky-cta"><span>Need an experimentation program?</span><a class="btn btn-brand btn-sm" href="../services.html?service=Experimentation#brief">Talk to a specialist</a><button class="x" aria-label="Dismiss">×</button></div>
+</main>
+<footer id="site-footer"></footer>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/site.js"></script>
+<script src="../assets/js/tools.js"></script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  function ab(){
+    var p1=+$('base').value/100,m=+$('mde').value/100,k=+$('var').value,a=+$('alpha').value,pw=+$('power').value;
+    var p2=$('mtype').value==='rel'?p1*(1+m):p1+m;
+    if(!(p1>0&&p1<1&&p2>0&&p2<1&&p2!==p1)){$('n1').textContent='—';$('nt').textContent='—';$('days').textContent='—';$('ab-note').textContent='Target rate must be between 0% and 100%.';return;}
+    if($('bonf').checked&&k>2)a=a/(k-1);
+    var za=DST.normInv(1-a/2),zb=DST.normInv(pw),pb=(p1+p2)/2;
+    var n=Math.ceil(Math.pow(za*Math.sqrt(2*pb*(1-pb))+zb*Math.sqrt(p1*(1-p1)+p2*(1-p2)),2)/Math.pow(p2-p1,2));
+    $('n1').textContent=n.toLocaleString();$('nt').textContent=(n*k).toLocaleString();
+    var d=+$('daily').value;$('days').textContent=d>0?Math.ceil(n*k/d)+' days':'—';
+    $('ab-note').textContent='Detects a change from '+(p1*100).toFixed(2)+'% to '+(p2*100).toFixed(2)+'% with '+Math.round(pw*100)+'% power at α = '+a.toFixed(4).replace(/0+$/,'')+'. Round up to whole weeks to cover weekday effects.';
+  }
+  function sv(){
+    var e=+$('moe').value/100,c=+$('sconf').value,p=+$('prop').value/100,N=+$('pop').value,r=(+$('resp').value||100)/100;
+    if(!(e>0&&p>0&&p<1)){$('sn').textContent='—';return;}
+    var z=DST.normInv(1-(1-c)/2),n0=z*z*p*(1-p)/(e*e),n=N>0?n0/(1+(n0-1)/N):n0;n=Math.ceil(n);
+    $('sn').textContent=n.toLocaleString();$('si').textContent=Math.ceil(n/r).toLocaleString();
+  }
+  ['base','mde','mtype','var','alpha','power','daily','bonf'].forEach(function(id){$(id).addEventListener('input',ab);});
+  ['moe','sconf','pop','prop','resp'].forEach(function(id){$(id).addEventListener('input',sv);});
+  ab();sv();
+})();
+</script>
+</body>
+</html>

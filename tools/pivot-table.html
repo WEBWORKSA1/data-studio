@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Online Pivot Table Generator — Free, Private, from CSV | Data.Studio</title>
+<meta name="description" content="Create pivot tables from CSV online. Group by rows and columns and summarise with sum, count, average, min, max or distinct count, with totals. Export to CSV. Free and private.">
+<link rel="canonical" href="https://data.studio/tools/pivot-table.html">
+<meta property="og:title" content="Pivot Table Generator | Data.Studio"><meta property="og:url" content="https://data.studio/tools/pivot-table.html"><meta property="og:site_name" content="Data.Studio">
+<meta name="theme-color" content="#0A0F1F">
+<meta name="google-adsense-account" content="ca-pub-6620975821265271">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6620975821265271" crossorigin="anonymous"></script>
+</head>
+<body data-root="../">
+<div class="topbar"><a href="https://web.works/contact" target="_blank" rel="noopener">Contact, if you are interested in this website / domain name / Sponsorship / Advertisement / Partnership →</a></div>
+<header id="site-header"></header>
+<main id="main">
+<section class="page-hero"><div class="wrap">
+  <div class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Tools</a> / Pivot Table</div>
+  <h1>Pivot Table</h1>
+  <p>Summarise thousands of rows into a compact table in seconds. Choose what to group by, what to measure and how to aggregate.</p>
+</div></section>
+<section class="section">
+  <div class="wrap tool">
+    <div class="panel">
+      <div class="dropzone" id="dz" tabindex="0" role="button"><input type="file" accept=".csv,.tsv,.txt,text/csv">📂 Drop a CSV or <u>browse</u></div>
+      <div class="field"><label for="csv">…or paste CSV</label><textarea id="csv" class="code" spellcheck="false" style="min-height:140px"></textarea></div>
+      <div class="btn-row"><button class="btn btn-ghost btn-sm" id="sample" type="button">Load sample</button><button class="btn btn-brand btn-sm" id="load" type="button">Read data</button></div>
+      <h3 class="mt">Layout</h3>
+      <div class="field"><label for="rows">Rows</label><select id="rows"></select></div>
+      <div class="field"><label for="cols">Columns (optional)</label><select id="cols"></select></div>
+      <div class="field-row"><div class="field"><label for="val">Values</label><select id="val"></select></div><div class="field"><label for="agg">Aggregate</label><select id="agg"><option value="sum">Sum</option><option value="count">Count</option><option value="avg">Average</option><option value="min">Min</option><option value="max">Max</option><option value="distinct">Distinct count</option></select></div></div>
+      <div class="field"><label for="order">Sort rows</label><select id="order"><option value="total">By total (high → low)</option><option value="label">By label (A → Z)</option></select></div>
+    </div>
+    <div class="panel">
+      <div class="toolbar"><button class="btn btn-brand btn-sm" id="exp" type="button">⬇ Export CSV</button><button class="btn btn-ghost btn-sm" id="copy" type="button">Copy</button><span class="muted" id="info" style="font-size:.88rem"></span></div>
+      <div class="table-wrap" id="out"></div>
+    </div>
+  </div>
+</section>
+<section class="section section-alt"><div class="wrap prose">
+  <h2 style="margin-top:0">How to use the pivot table</h2>
+  <p>A pivot table groups rows that share a value and summarises a measure for each group. Pick a <strong>Rows</strong> field (for example <em>Region</em>), an optional <strong>Columns</strong> field (for example <em>Quarter</em>), and a <strong>Values</strong> field with an aggregate (for example <em>Sum of Revenue</em>). Grand totals are calculated from the underlying rows, so averages and distinct counts stay correct. They are never an average of averages.</p>
+  <ul>
+    <li><strong>Count</strong> counts non-empty values. Use it with any field to count records.</li>
+    <li><strong>Distinct count</strong> counts unique values, such as unique customers per region.</li>
+    <li>Numbers formatted with currency symbols or thousands separators (like <code>$1,200</code>) are understood automatically.</li>
+  </ul>
+  <p>New to pivots? Read <a href="../guides/pivot-tables-explained.html">Pivot tables explained</a>.</p>
+</div></section>
+<div class="sticky-cta"><span>Want this as a live dashboard?</span><a class="btn btn-brand btn-sm" href="../services.html?service=Dashboard#brief">Get a dashboard built</a><button class="x" aria-label="Dismiss">×</button></div>
+</main>
+<footer id="site-footer"></footer>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/site.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="../assets/js/tools.js"></script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);},data={rows:[],fields:[]},table=null;
+  var SAMPLE='Region,Quarter,Product,Customer,Revenue,Units\nNorth,Q1,Laptop,Acme,12000,8\nNorth,Q1,Phone,Bolt,6400,16\nNorth,Q2,Laptop,Acme,15000,10\nNorth,Q2,Tablet,Cobalt,3600,9\nSouth,Q1,Phone,Delta,7200,18\nSouth,Q1,Tablet,Echo,2800,7\nSouth,Q2,Laptop,Delta,10500,7\nSouth,Q2,Phone,Echo,8000,20\nEast,Q1,Laptop,Fjord,9000,6\nEast,Q2,Phone,Fjord,5600,14\nEast,Q2,Tablet,Gamma,4400,11\nWest,Q1,Tablet,Helix,3200,8\nWest,Q2,Laptop,Helix,13500,9\nWest,Q2,Phone,Iris,6000,15';
+  function opts(sel,fields,none){sel.innerHTML=(none?'<option value="">(none)</option>':'')+fields.map(function(f){return '<option>'+DS.esc(f)+'</option>';}).join('');}
+  function load(){data=DST.parse($('csv').value,{typed:false});if(!data.fields.length){$('info').textContent='No data found.';return;}
+    opts($('rows'),data.fields);opts($('cols'),data.fields,true);opts($('val'),data.fields);
+    var num=data.fields.filter(function(f){var v=data.rows.slice(0,50).map(function(r){return r[f];}).filter(function(x){return !DST.isEmpty(x);});return v.length&&v.every(function(x){return DST.toNum(x)!==null;});});
+    var cat=data.fields.filter(function(f){return num.indexOf(f)<0;});
+    $('rows').value=cat[0]||data.fields[0];$('cols').value=cat[1]||'';$('val').value=num[num.length-1]||data.fields[0];$('agg').value=num.length?'sum':'count';build();}
+  function agg(vals,how){
+    if(how==='count')return vals.filter(function(v){return !DST.isEmpty(v);}).length;
+    if(how==='distinct'){var s={};vals.forEach(function(v){if(!DST.isEmpty(v))s[v]=1;});return Object.keys(s).length;}
+    var n=vals.map(DST.toNum).filter(function(x){return x!==null;});if(!n.length)return null;
+    if(how==='sum')return n.reduce(function(a,b){return a+b;},0);
+    if(how==='avg')return n.reduce(function(a,b){return a+b;},0)/n.length;
+    if(how==='min')return Math.min.apply(null,n);if(how==='max')return Math.max.apply(null,n);
+  }
+  function fmt(v){if(v==null)return '';return DS.fmtNum(v,Number.isInteger(v)?0:2);}
+  function build(){
+    if(!data.rows.length)return;
+    var rf=$('rows').value,cf=$('cols').value,vf=$('val').value,how=$('agg').value;
+    var groups={},rowAll={},colAll={},colKeys=[],all=[];
+    data.rows.forEach(function(r){var rk=DST.isEmpty(r[rf])?'(blank)':String(r[rf]).trim(),ck=cf?(DST.isEmpty(r[cf])?'(blank)':String(r[cf]).trim()):'Value',v=r[vf];
+      (groups[rk]=groups[rk]||{});(groups[rk][ck]=groups[rk][ck]||[]).push(v);(rowAll[rk]=rowAll[rk]||[]).push(v);(colAll[ck]=colAll[ck]||[]).push(v);all.push(v);if(colKeys.indexOf(ck)<0)colKeys.push(ck);});
+    colKeys.sort(function(a,b){return a.localeCompare(b,undefined,{numeric:true});});
+    var rk=Object.keys(groups),tot={};rk.forEach(function(k){tot[k]=agg(rowAll[k],how);});
+    rk.sort($('order').value==='label'?function(a,b){return a.localeCompare(b,undefined,{numeric:true});}:function(a,b){return (tot[b]||0)-(tot[a]||0);});
+    var showTot=!!cf,label={sum:'Sum',count:'Count',avg:'Average',min:'Min',max:'Max',distinct:'Distinct count'}[how]+' of '+vf;
+    var head=[rf].concat(colKeys);if(showTot)head.push('Total');
+    table=[head];
+    var h='<table class="data"><thead><tr><th>'+DS.esc(rf)+(cf?' ↓ / '+DS.esc(cf)+' →':'')+'</th>'+colKeys.map(function(c){return '<th class="num">'+DS.esc(cf?c:label)+'</th>';}).join('')+(showTot?'<th class="num">Total</th>':'')+'</tr></thead><tbody>';
+    rk.forEach(function(k){var line=[k];h+='<tr><td><strong>'+DS.esc(k)+'</strong></td>';colKeys.forEach(function(c){var v=groups[k][c]?agg(groups[k][c],how):null;line.push(v==null?'':v);h+='<td class="num">'+fmt(v)+'</td>';});if(showTot){line.push(tot[k]);h+='<td class="num"><strong>'+fmt(tot[k])+'</strong></td>';}table.push(line);h+='</tr>';});
+    var foot=['Grand total'];h+='</tbody><tfoot><tr><td>Grand total</td>';colKeys.forEach(function(c){var v=agg(colAll[c],how);foot.push(v);h+='<td class="num">'+fmt(v)+'</td>';});if(showTot){var g=agg(all,how);foot.push(g);h+='<td class="num">'+fmt(g)+'</td>';}table.push(foot);
+    $('out').innerHTML=h+'</tr></tfoot></table>';
+    $('info').textContent=label+' · '+rk.length+' groups from '+data.rows.length.toLocaleString()+' rows';
+  }
+  ['rows','cols','val','agg','order'].forEach(function(id){$(id).addEventListener('change',build);});
+  $('load').onclick=load;$('sample').onclick=function(){$('csv').value=SAMPLE;load();};
+  $('exp').onclick=function(){if(table)DST.download('pivot.csv',Papa.unparse(table),'text/csv');};
+  $('copy').onclick=function(){if(table)DST.copy(Papa.unparse(table,{delimiter:'\t'}),$('copy'));};
+  DST.dropzone($('dz'),$('csv'),load);
+  $('csv').value=SAMPLE;load();
+})();
+</script>
+</body>
+</html>

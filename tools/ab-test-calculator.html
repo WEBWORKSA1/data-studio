@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A/B Test Significance Calculator — p-value, Confidence Interval, Uplift | Data.Studio</title>
+<meta name="description" content="Free A/B test calculator: check statistical significance of conversion rates with a two-proportion z-test, p-value, confidence interval, relative uplift and a sample ratio mismatch check.">
+<link rel="canonical" href="https://data.studio/tools/ab-test-calculator.html">
+<meta property="og:title" content="A/B Test Calculator | Data.Studio"><meta property="og:url" content="https://data.studio/tools/ab-test-calculator.html"><meta property="og:site_name" content="Data.Studio">
+<meta name="theme-color" content="#0A0F1F">
+<meta name="google-adsense-account" content="ca-pub-6620975821265271">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6620975821265271" crossorigin="anonymous"></script>
+</head>
+<body data-root="../">
+<div class="topbar"><a href="https://web.works/contact" target="_blank" rel="noopener">Contact, if you are interested in this website / domain name / Sponsorship / Advertisement / Partnership →</a></div>
+<header id="site-header"></header>
+<main id="main">
+<section class="page-hero"><div class="wrap">
+  <div class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Tools</a> / A/B Test Calculator</div>
+  <h1>A/B Test Calculator</h1>
+  <p>Did variant B really beat A, or is it noise? Enter visitors and conversions to get significance, a confidence interval for the difference, and the uplift.</p>
+</div></section>
+<section class="section">
+  <div class="wrap tool">
+    <div class="panel">
+      <h3>Control (A)</h3>
+      <div class="field-row"><div class="field"><label for="na">Visitors</label><input id="na" type="number" min="1" value="10000"></div><div class="field"><label for="ca">Conversions</label><input id="ca" type="number" min="0" value="500"></div></div>
+      <h3>Variant (B)</h3>
+      <div class="field-row"><div class="field"><label for="nb">Visitors</label><input id="nb" type="number" min="1" value="10000"></div><div class="field"><label for="cb">Conversions</label><input id="cb" type="number" min="0" value="580"></div></div>
+      <div class="field-row"><div class="field"><label for="conf">Confidence</label><select id="conf"><option value="0.90">90%</option><option value="0.95" selected>95%</option><option value="0.99">99%</option></select></div><div class="field"><label for="tail">Hypothesis</label><select id="tail"><option value="2">Two-sided</option><option value="1">One-sided (B > A)</option></select></div></div>
+      <p class="form-note">Results update as you type.</p>
+    </div>
+    <div class="panel">
+      <div class="kpis">
+        <div class="kpi-box"><span>Rate A</span><b class="kpi" id="ra"></b></div>
+        <div class="kpi-box"><span>Rate B</span><b class="kpi" id="rb"></b></div>
+        <div class="kpi-box"><span>Relative uplift</span><b class="kpi" id="up"></b></div>
+        <div class="kpi-box"><span>p-value</span><b class="kpi" id="pv"></b></div>
+        <div class="kpi-box"><span>z-score</span><b class="kpi" id="zs"></b></div>
+        <div class="kpi-box"><span>Diff. CI (abs.)</span><b class="kpi" id="ci" style="font-size:1.05rem"></b></div>
+      </div>
+      <div id="verdict"></div>
+      <div id="srm"></div>
+      <div class="mt" id="bars"></div>
+    </div>
+  </div>
+</section>
+<section class="section section-alt"><div class="wrap prose">
+  <h2 style="margin-top:0">Method</h2>
+  <p>The calculator runs a <strong>two-proportion z-test</strong>. The test statistic uses the pooled conversion rate p̂ = (c<sub>A</sub>+c<sub>B</sub>)/(n<sub>A</sub>+n<sub>B</sub>) and standard error √(p̂(1−p̂)(1/n<sub>A</sub>+1/n<sub>B</sub>)). The confidence interval for the absolute difference uses the unpooled standard error √(p<sub>A</sub>(1−p<sub>A</sub>)/n<sub>A</sub> + p<sub>B</sub>(1−p<sub>B</sub>)/n<sub>B</sub>). The normal approximation is reliable when each group has at least about 10 conversions and 10 non-conversions.</p>
+  <h3>Sample ratio mismatch (SRM)</h3>
+  <p>If you intended a 50/50 split but traffic is noticeably uneven, something in the assignment or tracking may be broken, and the result can't be trusted. We run a chi-square test on visitor counts and warn when p &lt; 0.01.</p>
+  <h3>Read results responsibly</h3>
+  <ul>
+    <li>Decide the sample size <em>before</em> the test with the <a href="sample-size-calculator.html">Sample Size Calculator</a>, and don't stop early just because p dips below 0.05.</li>
+    <li>A significant result tells you the effect is unlikely to be zero, not that it's large. Check the confidence interval.</li>
+    <li>Run tests across full weekly cycles to avoid day-of-week bias.</li>
+  </ul>
+  <p>Full explanation: <a href="../guides/ab-testing-explained.html">A/B testing, explained properly</a>.</p>
+</div></section>
+<div class="sticky-cta"><span>Running experiments at scale?</span><a class="btn btn-brand btn-sm" href="../services.html?service=Experimentation#brief">Get experimentation help</a><button class="x" aria-label="Dismiss">×</button></div>
+</main>
+<footer id="site-footer"></footer>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/site.js"></script>
+<script src="../assets/js/tools.js"></script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  function pct(x,d){return (x*100).toFixed(d==null?2:d)+'%';}
+  function calc(){
+    var na=+$('na').value,ca=+$('ca').value,nb=+$('nb').value,cb=+$('cb').value,conf=+$('conf').value,tail=+$('tail').value;
+    if(!(na>0&&nb>0)||ca<0||cb<0||ca>na||cb>nb){$('verdict').innerHTML='<div class="verdict bad">Check inputs: conversions must be between 0 and visitors.</div>';return;}
+    var pa=ca/na,pb=cb/nb,pp=(ca+cb)/(na+nb),se=Math.sqrt(pp*(1-pp)*(1/na+1/nb)),z=se?(pb-pa)/se:0;
+    var p=tail===2?2*(1-DST.normCdf(Math.abs(z))):1-DST.normCdf(z);
+    var seu=Math.sqrt(pa*(1-pa)/na+pb*(1-pb)/nb),zc=DST.normInv(tail===2?1-(1-conf)/2:conf),d=pb-pa;
+    var lo=d-zc*seu,hi=tail===2?d+zc*seu:Infinity;
+    $('ra').textContent=pct(pa);$('rb').textContent=pct(pb);
+    $('up').textContent=pa?((d/pa>0?'+':'')+pct(d/pa,1)):'—';$('up').className='kpi '+(d>0?'result-good':d<0?'result-bad':'');
+    $('pv').textContent=p<0.0001?'< 0.0001':p.toFixed(4);$('zs').textContent=z.toFixed(3);
+    $('ci').textContent=(lo*100).toFixed(2)+' to '+(hi===Infinity?'∞':(hi*100).toFixed(2))+' pp';
+    var sig=p<1-conf;
+    $('verdict').innerHTML=sig?'<div class="verdict good"><strong>Statistically significant at '+pct(conf,0)+' confidence.</strong> Variant B '+(d>0?'outperforms':'underperforms')+' control by '+pct(Math.abs(d/pa),1)+' (relative). The true absolute difference is likely between '+(lo*100).toFixed(2)+' and '+(hi===Infinity?'+∞':(hi*100).toFixed(2))+' percentage points.</div>':'<div class="verdict bad"><strong>Not significant at '+pct(conf,0)+' confidence.</strong> The observed difference could plausibly be random variation (p = '+p.toFixed(3)+'). Keep collecting data to your pre-planned sample size, or treat the variants as equivalent.</div>';
+    var chi=Math.pow(na-(na+nb)/2,2)/((na+nb)/2)*2,ps=2*(1-DST.normCdf(Math.sqrt(chi)));
+    $('srm').innerHTML=ps<0.01?'<div class="verdict bad" style="margin-top:10px">⚠️ <strong>Possible sample ratio mismatch</strong> (p = '+ps.toExponential(2)+'). If you intended a 50/50 split, check randomisation and tracking before trusting this result.</div>':'';
+    var mx=Math.max(pa,pb)*1.25||1;
+    $('bars').innerHTML=[['A',pa,'#8C93B0'],['B',pb,'#5B5BF7']].map(function(b){return '<div style="display:flex;align-items:center;gap:10px;margin:8px 0"><strong style="width:18px">'+b[0]+'</strong><div style="flex:1;background:#EEF0F6;border-radius:8px;height:28px;overflow:hidden"><div style="width:'+(b[1]/mx*100)+'%;height:100%;background:'+b[2]+';border-radius:8px"></div></div><span class="num" style="width:70px">'+pct(b[1])+'</span></div>';}).join('');
+  }
+  ['na','ca','nb','cb','conf','tail'].forEach(function(id){$(id).addEventListener('input',calc);});
+  calc();
+})();
+</script>
+</body>
+</html>
