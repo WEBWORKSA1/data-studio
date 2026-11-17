@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chart Guide — Which Chart Should I Use? 24 Chart Types Explained | Data.Studio</title>
+<meta name="description" content="Find the right chart for your data. Filter 24 chart types by what you want to show (comparison, trend, part-to-whole, distribution, relationship, ranking, geography, flow) with when to use and avoid each.">
+<link rel="canonical" href="https://data.studio/chart-guide.html">
+<meta property="og:title" content="Which chart should I use? | Data.Studio"><meta property="og:url" content="https://data.studio/chart-guide.html"><meta property="og:site_name" content="Data.Studio">
+<meta name="theme-color" content="#0A0F1F">
+<meta name="google-adsense-account" content="ca-pub-6620975821265271">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6620975821265271" crossorigin="anonymous"></script>
+</head>
+<body data-root="./">
+<div class="topbar"><a href="https://web.works/contact" target="_blank" rel="noopener">Contact, if you are interested in this website / domain name / Sponsorship / Advertisement / Partnership →</a></div>
+<header id="site-header"></header>
+<main id="main">
+<section class="page-hero"><div class="wrap">
+  <div class="breadcrumb"><a href="index.html">Home</a> / Chart Guide</div>
+  <h1>Which chart should I use?</h1>
+  <p>Start with the question your audience needs answered. Pick a goal below and we'll show the chart types that fit, with when to use them and when to avoid them.</p>
+</div></section>
+<section class="section">
+  <div class="wrap">
+    <p style="font-weight:600;margin:0 0 10px">I want to show…</p>
+    <div class="toolbar" style="justify-content:space-between"><div class="chips" id="goals"></div><div class="search"><label class="sr-only" for="q">Search chart types</label><input id="q" type="search" placeholder="Search chart types…"></div></div>
+    <p class="muted" id="hint"></p>
+    <div class="grid g3" id="list"></div>
+  </div>
+</section>
+<section class="section section-alt"><div class="wrap prose">
+  <h2 style="margin-top:0">Three rules that beat any chart chooser</h2>
+  <ol>
+    <li><strong>One chart, one message.</strong> If you can't say the takeaway in a sentence, the chart is doing too much. Split it.</li>
+    <li><strong>Position beats colour, colour beats area.</strong> People compare lengths along a common axis most accurately. Angles, areas and colour intensity are harder to read, so use them for rough impressions.</li>
+    <li><strong>Label directly, title with the finding.</strong> Put labels next to the lines or bars they describe, and write titles that state the conclusion.</li>
+  </ol>
+  <p>Go deeper in our guide: <a href="guides/how-to-choose-the-right-chart.html">How to choose the right chart</a>.</p>
+</div></section>
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/site.js"></script>
+<script>
+(function(){
+  var G={compare:'Comparison',trend:'Change over time',part:'Part-to-whole',dist:'Distribution',rel:'Relationship',rank:'Ranking',geo:'Geography',flow:'Flow & process'};
+  var C=[
+    ['Vertical bar chart',['compare','rank'],'Compares values across a modest number of categories.','Up to ~12 categories with short labels.','Long category names, so use horizontal bars.','bar'],
+    ['Horizontal bar chart',['compare','rank'],'Bars running left to right, easy to label.','Ranking many categories or long labels.','Time series. Time should run horizontally.','hbar'],
+    ['Grouped bar chart',['compare'],'Side-by-side bars for two or three series per category.','Comparing a few series across categories.','More than ~4 series. It gets noisy fast.','bar'],
+    ['Stacked bar chart',['part','compare'],'Bars split into segments that sum to a total.','Showing totals and the main component.','Comparing middle segments, which lack a common baseline.','stacked'],
+    ['100% stacked bar',['part'],'Every bar sums to 100% to compare composition.','Comparing mix across groups (e.g. channel share by region).','When absolute totals matter.',null],
+    ['Line chart',['trend'],'Connects values over a continuous interval.','Trends over time, several series at once.','Unordered categories.','line'],
+    ['Area chart',['trend','part'],'A line chart with the area below filled.','Emphasising volume over time.','Many overlapping series. Use small multiples instead.','area'],
+    ['Slope chart',['trend','compare'],'Lines connecting two points in time per category.','Before/after comparisons for many items.','More than two time points.',null],
+    ['Sparkline',['trend'],'A tiny, axis-free line chart inside text or tables.','Dashboards and KPI tables showing direction.','When precise values matter.',null],
+    ['Pie chart',['part'],'A circle divided into slices of a whole.','2–5 parts where one dominates.','Many slices or close values. Use bars.','pie'],
+    ['Doughnut chart',['part'],'A pie with a hole, often with a total in the centre.','A single headline share (e.g. 72% complete).','Comparing several doughnuts side by side.','doughnut'],
+    ['Treemap',['part','rank'],'Nested rectangles sized by value.','Hierarchical part-to-whole with many items.','Precise comparisons between similar values.',null],
+    ['Waterfall chart',['part','flow'],'Shows how a start value moves to an end value through gains and losses.','Profit bridges, budget variance.','Unrelated categories.',null],
+    ['Histogram',['dist'],'Bars counting values that fall into ranges (bins).','Seeing the shape, spread and skew of one variable.','Comparing many groups. Use box plots.',null],
+    ['Box plot',['dist','compare'],'Median, quartiles and outliers in a compact glyph.','Comparing distributions across groups.','Non-technical audiences, unless explained.',null],
+    ['Violin / density plot',['dist'],'A smoothed outline of a distribution.','Showing multi-modal shapes.','Small samples, where it suggests false precision.',null],
+    ['Scatter plot',['rel','dist'],'Points placed by two numeric variables.','Correlation, clusters and outliers.','Fewer than ~10 points, or categorical axes.','scatter'],
+    ['Bubble chart',['rel'],'A scatter plot where point size encodes a third variable.','Adding magnitude (e.g. population) to a relationship.','Precise size comparisons. Area is hard to judge.',null],
+    ['Heatmap',['rel','dist','trend'],'A grid of cells coloured by value.','Patterns across two categorical dimensions (day × hour).','Exact values, unless the cells are labelled.',null],
+    ['Radar chart',['compare'],'Values on axes radiating from a centre.','Profiles across 4–8 comparable measures.','Many items, or measures on different scales.','radar'],
+    ['Lollipop / dot plot',['rank','compare'],'A cleaner alternative to bars using a dot on a line.','Rankings with many categories.','When zero-baseline emphasis is needed.',null],
+    ['Choropleth map',['geo'],'Regions shaded by a value.','Rates and percentages by area.','Raw counts, which mostly reflect population.',null],
+    ['Symbol / bubble map',['geo'],'Sized markers placed on a map.','Counts or totals by location.','Dense areas where symbols overlap.',null],
+    ['Sankey diagram',['flow','part'],'Bands whose widths show flow between stages.','Budgets, energy flows, customer journeys.','Many small flows that become spaghetti.',null]
+  ];
+  var goal='all',q='';
+  var goals=document.getElementById('goals');
+  goals.innerHTML='<button class="chip active" data-g="all">All</button>'+Object.keys(G).map(function(k){return '<button class="chip" data-g="'+k+'">'+G[k]+'</button>';}).join('');
+  function render(){
+    var list=C.filter(function(c){return (goal==='all'||c[1].indexOf(goal)>-1)&&(!q||(c[0]+' '+c[2]).toLowerCase().indexOf(q)>-1);});
+    document.getElementById('hint').textContent=list.length+' chart type'+(list.length===1?'':'s')+(goal!=='all'?' for '+G[goal].toLowerCase():'');
+    document.getElementById('list').innerHTML=list.map(function(c){return '<div class="card">'+c[1].map(function(g){return '<span class="badge" style="margin-right:4px">'+G[g]+'</span>';}).join('')+'<h3>'+c[0]+'</h3><p>'+c[2]+'</p><p style="margin-top:10px;font-size:.88rem"><strong class="result-good">Use for:</strong> <span class="muted">'+c[3]+'</span></p><p style="margin-top:4px;font-size:.88rem"><strong class="result-bad">Avoid:</strong> <span class="muted">'+c[4]+'</span></p>'+(c[5]?'<a class="more" href="tools/chart-maker.html?type='+c[5]+'">Make one now →</a>':'')+'</div>';}).join('')||'<div class="pending">No chart types match.</div>';
+    goals.querySelectorAll('.chip').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-g')===goal);});
+  }
+  goals.addEventListener('click',function(e){var g=e.target.getAttribute('data-g');if(g){goal=g;render();}});
+  document.getElementById('q').addEventListener('input',function(e){q=e.target.value.toLowerCase();render();});
+  render();
+})();
+</script>
+</body>
+</html>
