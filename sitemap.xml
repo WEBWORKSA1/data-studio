@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url><loc>https://data.studio/</loc><lastmod>2026-11-17</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
+<url><loc>https://data.studio/tools/</loc><lastmod>2026-11-17</lastmod><priority>0.9</priority></url>
+<url><loc>https://data.studio/tools/chart-maker.html</loc><lastmod>2026-11-17</lastmod><priority>0.9</priority></url>
+<url><loc>https://data.studio/tools/csv-json-converter.html</loc><lastmod>2026-11-17</lastmod><priority>0.9</priority></url>
+<url><loc>https://data.studio/tools/data-profiler.html</loc><lastmod>2026-11-17</lastmod><priority>0.9</priority></url>
+<url><loc>https://data.studio/tools/data-cleaner.html</loc><lastmod>2026-11-17</lastmod><priority>0.9</priority></url>
+<url><loc>https://data.studio/tools/pivot-table.html</loc><lastmod>2026-11-17</lastmod><priority>0.9</priority></url>
+<url><loc>https://data.studio/tools/ab-test-calculator.html</loc><lastmod>2026-11-17</lastmod><priority>0.9</priority></url>
+<url><loc>https://data.studio/tools/sample-size-calculator.html</loc><lastmod>2026-11-17</lastmod><priority>0.9</priority></url>
+<url><loc>https://data.studio/chart-guide.html</loc><lastmod>2026-11-17</lastmod><priority>0.8</priority></url>
+<url><loc>https://data.studio/datasets.html</loc><lastmod>2026-11-17</lastmod><priority>0.8</priority></url>
+<url><loc>https://data.studio/live.html</loc><lastmod>2026-11-17</lastmod><changefreq>hourly</changefreq><priority>0.8</priority></url>
+<url><loc>https://data.studio/learn.html</loc><lastmod>2026-11-17</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://data.studio/glossary.html</loc><lastmod>2026-11-17</lastmod><priority>0.7</priority></url>
+<url><loc>https://data.studio/guides/</loc><lastmod>2026-11-17</lastmod><priority>0.8</priority></url>
+<url><loc>https://data.studio/guides/how-to-choose-the-right-chart.html</loc><lastmod>2026-11-17</lastmod><priority>0.7</priority></url>
+<url><loc>https://data.studio/guides/data-cleaning-checklist.html</loc><lastmod>2026-11-17</lastmod><priority>0.7</priority></url>
+<url><loc>https://data.studio/guides/ab-testing-explained.html</loc><lastmod>2026-11-17</lastmod><priority>0.7</priority></url>
+<url><loc>https://data.studio/guides/kpi-dashboard-design.html</loc><lastmod>2026-11-17</lastmod><priority>0.7</priority></url>
+<url><loc>https://data.studio/guides/descriptive-statistics-primer.html</loc><lastmod>2026-11-17</lastmod><priority>0.7</priority></url>
+<url><loc>https://data.studio/guides/pivot-tables-explained.html</loc><lastmod>2026-11-17</lastmod><priority>0.7</priority></url>
+<url><loc>https://data.studio/guides/data-formats-csv-json-parquet.html</loc><lastmod>2026-11-17</lastmod><priority>0.7</priority></url>
+<url><loc>https://data.studio/guides/finding-and-evaluating-open-data.html</loc><lastmod>2026-11-17</lastmod><priority>0.7</priority></url>
+<url><loc>https://data.studio/services.html</loc><lastmod>2026-11-17</lastmod><priority>0.9</priority></url>
+<url><loc>https://data.studio/contests.html</loc><lastmod>2026-11-17</lastmod><priority>0.6</priority></url>
+<url><loc>https://data.studio/careers.html</loc><lastmod>2026-11-17</lastmod><priority>0.5</priority></url>
+<url><loc>https://data.studio/support.html</loc><lastmod>2026-11-17</lastmod><priority>0.5</priority></url>
+<url><loc>https://data.studio/advertise.html</loc><lastmod>2026-11-17</lastmod><priority>0.5</priority></url>
+<url><loc>https://data.studio/about.html</loc><lastmod>2026-11-17</lastmod><priority>0.5</priority></url>
+<url><loc>https://data.studio/contact.html</loc><lastmod>2026-11-17</lastmod><priority>0.5</priority></url>
+<url><loc>https://data.studio/privacy.html</loc><lastmod>2026-11-17</lastmod><priority>0.3</priority></url>
+<url><loc>https://data.studio/terms.html</loc><lastmod>2026-11-17</lastmod><priority>0.3</priority></url>
+<url><loc>https://data.studio/disclaimer.html</loc><lastmod>2026-11-17</lastmod><priority>0.3</priority></url>
+</urlset>
