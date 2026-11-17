@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Data — Exchange Rates, World Indicators, Research & Data News | Data.Studio</title>
+<meta name="description" content="Self-updating live data: ECB reference exchange rates, World Bank development indicators, the newest data-science research papers, data news and trending open-source data projects. Refreshed every 6 hours.">
+<link rel="canonical" href="https://data.studio/live.html">
+<meta property="og:title" content="Live Data | Data.Studio"><meta property="og:description" content="Exchange rates, world indicators, research and data news, refreshed automatically."><meta property="og:url" content="https://data.studio/live.html"><meta property="og:site_name" content="Data.Studio">
+<meta name="theme-color" content="#0A0F1F">
+<meta name="google-adsense-account" content="ca-pub-6620975821265271">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6620975821265271" crossorigin="anonymous"></script>
+</head>
+<body data-root="./">
+<div class="topbar"><a href="https://web.works/contact" target="_blank" rel="noopener">Contact, if you are interested in this website / domain name / Sponsorship / Advertisement / Partnership →</a></div>
+<header id="site-header"></header>
+<main id="main">
+<section class="page-hero"><div class="wrap">
+  <div class="breadcrumb"><a href="index.html">Home</a> / Live Data</div>
+  <h1>Live data</h1>
+  <p>An automated job refreshes these feeds every six hours from public sources. Every figure links back to where it came from.</p>
+  <p class="updated" style="margin-top:14px" data-updated></p>
+</div></section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><div><span class="eyebrow">Currencies</span><h2>US dollar reference rates</h2><p>Euro foreign exchange reference rates published by the European Central Bank, retrieved via the open <a href="https://www.frankfurter.app/" target="_blank" rel="noopener">Frankfurter API</a> and rebased to USD. Reference only, not for trading.</p></div><span class="badge gray" id="fx-date"></span></div>
+    <div class="grid g4" id="fx"><div class="pending">Loading…</div></div>
+    <div class="panel mt"><h3>USD → EUR, last 30 days</h3><div style="height:260px"><canvas id="fx-chart" aria-label="USD to EUR exchange rate chart"></canvas></div></div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="wrap">
+    <div class="section-head"><div><span class="eyebrow">World indicators</span><h2>Major economies at a glance</h2><p>Most recent available values from the <a href="https://data.worldbank.org" target="_blank" rel="noopener">World Bank World Development Indicators</a> (CC BY 4.0). Years can differ by country.</p></div>
+      <div class="chips" id="wb-sort"><button class="chip active" data-k="gdp">GDP</button><button class="chip" data-k="pop">Population</button><button class="chip" data-k="gdppc">GDP per capita</button><button class="chip" data-k="life">Life expectancy</button><button class="chip" data-k="net">Internet users</button></div></div>
+    <div class="table-wrap" id="wb"><div class="pending">Loading…</div></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap grid g2" style="align-items:start">
+    <div>
+      <span class="eyebrow">Research</span><h2>New papers in data science</h2>
+      <p class="muted">Latest submissions to arXiv in databases, statistical ML and visualization-adjacent fields.</p>
+      <ul class="feed" id="papers"><li class="pending">Loading…</li></ul>
+    </div>
+    <div>
+      <span class="eyebrow">Community</span><h2>Data news & discussion</h2>
+      <p class="muted">Popular recent stories about data, analytics and visualization from Hacker News.</p>
+      <ul class="feed" id="news"><li class="pending">Loading…</li></ul>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="wrap">
+    <div class="section-head"><div><span class="eyebrow">Open source</span><h2>Trending data projects on GitHub</h2><p>Recently active, highly starred repositories tagged data visualization, data analysis or data engineering.</p></div></div>
+    <div class="grid g3" id="repos"><div class="pending">Loading…</div></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap"><div class="band"><div><h2>Want a live dashboard like this for your business?</h2><p>We build automated dashboards that pull from your own systems (sales, ads, finance, operations) and refresh themselves.</p></div><div><a class="btn btn-teal" href="services.html?service=Dashboard#brief">Get a free proposal →</a></div></div></div>
+</section>
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/site.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+(function(){
+  var pend='<div class="pending">This feed is refreshing. Please check back shortly.</div>';
+  DS.getJSON('fx').then(function(d){
+    if(!d.rates)throw 0;
+    document.getElementById('fx-date').textContent='ECB reference date: '+(d.date||'');
+    var pick=['EUR','GBP','JPY','CNY','INR','CAD','AUD','CHF','MXN','BRL','KRW','SGD'];
+    document.getElementById('fx').innerHTML=pick.filter(function(c){return d.rates[c];}).map(function(c){var ch=d.change&&d.change[c];var cls=ch>0?'up':ch<0?'down':'';return '<div class="tile"><span class="lbl">USD → '+c+'</span><span class="val">'+DS.fmtNum(d.rates[c],d.rates[c]>100?2:4)+'</span>'+(ch!=null?'<span class="chg '+cls+'">'+(ch>0?'▲ ':'▼ ')+Math.abs(ch).toFixed(2)+'%</span>':'')+'</div>';}).join('');
+    var s=d.series&&d.series.EUR;
+    if(s&&s.length&&window.Chart){new Chart(document.getElementById('fx-chart'),{type:'line',data:{labels:s.map(function(p){return p[0];}),datasets:[{label:'EUR per USD',data:s.map(function(p){return p[1];}),borderColor:'#5B5BF7',backgroundColor:'rgba(91,91,247,.1)',fill:true,tension:.3,pointRadius:0}]},options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{maxTicksLimit:6}}}}});}
+  }).catch(function(){document.getElementById('fx').innerHTML=pend;});
+
+  var wb=[],key='gdp',labels={gdp:['GDP (current US$)',DS.fmtBig],pop:['Population',DS.fmtBig],gdppc:['GDP per capita (US$)',function(v){return DS.fmtNum(v,0);}],life:['Life expectancy (yrs)',function(v){return DS.fmtNum(v,1);}],net:['Internet users (% pop.)',function(v){return DS.fmtNum(v,1);}]};
+  function renderWB(){
+    var rows=wb.slice().sort(function(a,b){return ((b[key]||{}).v||0)-((a[key]||{}).v||0);});
+    var ks=Object.keys(labels);
+    var h='<table class="data"><thead><tr><th>#</th><th>Country</th>'+ks.map(function(k){return '<th class="num">'+labels[k][0]+'</th>';}).join('')+'</tr></thead><tbody>';
+    rows.forEach(function(r,i){h+='<tr><td>'+(i+1)+'</td><td><strong>'+DS.esc(r.name)+'</strong></td>'+ks.map(function(k){var c=r[k];return '<td class="num"'+(k===key?' style="background:#F3F3FF"':'')+'>'+(c?labels[k][1](c.v)+' <span class="muted" style="font-size:.72rem">'+c.y+'</span>':'—')+'</td>';}).join('')+'</tr>';});
+    document.getElementById('wb').innerHTML=h+'</tbody></table>';
+  }
+  DS.getJSON('worldbank').then(function(d){wb=d.countries||[];if(!wb.length)throw 0;renderWB();}).catch(function(){document.getElementById('wb').innerHTML=pend;});
+  document.getElementById('wb-sort').addEventListener('click',function(e){var k=e.target.getAttribute('data-k');if(!k)return;key=k;this.querySelectorAll('.chip').forEach(function(c){c.classList.toggle('active',c===e.target);});if(wb.length)renderWB();});
+
+  function feed(id,items,fn){var el=document.getElementById(id);el.innerHTML=items&&items.length?items.map(fn).join(''):'<li>'+pend+'</li>';}
+  DS.getJSON('papers').then(function(d){feed('papers',(d.papers||[]).slice(0,10),function(p){return '<li><a href="'+DS.esc(p.url)+'" target="_blank" rel="noopener">'+DS.esc(p.title)+'</a><small>'+DS.esc((p.authors||[]).slice(0,3).join(', '))+((p.authors||[]).length>3?' et al.':'')+' · '+DS.esc(p.category||'')+' · '+DS.ago(p.published)+'</small></li>';});}).catch(function(){feed('papers',[]);});
+  DS.getJSON('news').then(function(d){feed('news',(d.stories||[]).slice(0,10),function(s){return '<li><a href="'+DS.esc(s.url)+'" target="_blank" rel="noopener nofollow">'+DS.esc(s.title)+'</a><small>'+s.points+' points · <a href="'+DS.esc(s.hn)+'" target="_blank" rel="noopener" style="font-weight:400">'+s.comments+' comments</a> · '+DS.ago(s.created)+'</small></li>';});}).catch(function(){feed('news',[]);});
+  DS.getJSON('repos').then(function(d){var r=(d.repos||[]).slice(0,9);document.getElementById('repos').innerHTML=r.length?r.map(function(x){return '<a class="card" href="'+DS.esc(x.url)+'" target="_blank" rel="noopener"><span class="badge gray">'+DS.esc(x.language||'—')+'</span> <span class="badge amber">★ '+DS.fmtBig(x.stars)+'</span><h3>'+DS.esc(x.name)+'</h3><p>'+DS.esc(x.description||'')+'</p></a>';}).join(''):pend;}).catch(function(){document.getElementById('repos').innerHTML=pend;});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open Datasets Directory — 40+ Free Public Data Sources | Data.Studio</title>
+<meta name="description" content="A curated directory of 40+ free, trusted open data sources: economics, government statistics, health, climate, geography, machine learning, research repositories and city portals, with formats and licences.">
+<link rel="canonical" href="https://data.studio/datasets.html">
+<meta property="og:title" content="Open Datasets Directory | Data.Studio"><meta property="og:description" content="40+ free, trusted public data sources."><meta property="og:url" content="https://data.studio/datasets.html"><meta property="og:site_name" content="Data.Studio">
+<meta name="theme-color" content="#0A0F1F">
+<meta name="google-adsense-account" content="ca-pub-6620975821265271">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6620975821265271" crossorigin="anonymous"></script>
+</head>
+<body data-root="./">
+<div class="topbar"><a href="https://web.works/contact" target="_blank" rel="noopener">Contact, if you are interested in this website / domain name / Sponsorship / Advertisement / Partnership →</a></div>
+<header id="site-header"></header>
+<main id="main">
+<section class="page-hero"><div class="wrap">
+  <div class="breadcrumb"><a href="index.html">Home</a> / Datasets</div>
+  <h1>Open datasets directory</h1>
+  <p>Trusted public data sources, hand-picked and described in plain language, with formats and licence notes. Use them for analysis, teaching, dashboards and the monthly Data Viz Challenge.</p>
+</div></section>
+<section class="section">
+  <div class="wrap">
+    <div class="toolbar" style="justify-content:space-between">
+      <div class="chips" id="cats"></div>
+      <div class="search"><label class="sr-only" for="q">Search datasets</label><input id="q" type="search" placeholder="Search by name, topic or publisher…"></div>
+    </div>
+    <p class="muted" id="count"></p>
+    <div class="grid g3" id="list"><div class="pending">Loading directory…</div></div>
+
+    <div class="grid g2 mt">
+      <div class="card">
+        <h2 style="font-size:1.3rem;margin-top:0">Before you use a dataset</h2>
+        <ul class="list-check">
+          <li><strong>Check the licence.</strong> CC BY needs attribution; ODbL needs share-alike for derived databases.</li>
+          <li><strong>Read the methodology.</strong> Definitions change between releases and countries.</li>
+          <li><strong>Note the vintage.</strong> Official statistics are revised. Record the download date.</li>
+          <li><strong>Profile it first.</strong> Run it through our <a href="tools/data-profiler.html">Data Profiler</a> to spot gaps and outliers.</li>
+        </ul>
+        <a class="more" href="guides/finding-and-evaluating-open-data.html">Read the full guide →</a>
+      </div>
+      <div class="card">
+        <h2 style="font-size:1.3rem;margin-top:0">Suggest a source</h2>
+        <p>Know a high-quality open data source we're missing? Tell us. We review every suggestion.</p>
+        <form data-ds-form="Dataset Suggestion" data-success="Thanks! We'll review the source and add it if it meets our quality bar." class="mt-s">
+          <div class="form-grid">
+            <div class="full"><label for="s-url">Dataset URL</label><input id="s-url" name="dataset_url" type="url" required placeholder="https://"></div>
+            <div><label for="s-name">Your name</label><input id="s-name" name="name"></div>
+            <div><label for="s-email">Email (optional)</label><input id="s-email" name="email" type="email"></div>
+            <div class="full"><label for="s-why">Why is it useful?</label><textarea id="s-why" name="message" rows="3"></textarea></div>
+            <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off">
+            <div class="full"><button class="btn btn-ghost" type="submit">Suggest source</button></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/site.js"></script>
+<script>
+(function(){
+  var all=[],cat=decodeURIComponent((location.hash||'').slice(1))||'All',q='';
+  var list=document.getElementById('list'),cats=document.getElementById('cats'),count=document.getElementById('count');
+  function render(){
+    var qq=q.toLowerCase();
+    var items=all.filter(function(d){return (cat==='All'||d.category===cat)&&(!qq||(d.name+' '+d.desc+' '+d.publisher+' '+d.category).toLowerCase().indexOf(qq)>-1);});
+    count.textContent=items.length+' source'+(items.length===1?'':'s')+(cat!=='All'?' in '+cat:'');
+    list.innerHTML=items.map(function(d){return '<a class="card" href="'+DS.esc(d.url)+'" target="_blank" rel="noopener"><span class="badge">'+DS.esc(d.category)+'</span> <span class="badge gray">'+DS.esc(d.formats)+'</span><h3>'+DS.esc(d.name)+' ↗</h3><p>'+DS.esc(d.desc)+'</p><p class="form-note" style="margin-top:10px">'+DS.esc(d.publisher)+' · Licence: '+DS.esc(d.license)+'</p></a>';}).join('')||'<div class="pending">No sources match. Try another search.</div>';
+    cats.querySelectorAll('.chip').forEach(function(c){c.classList.toggle('active',c.getAttribute('data-c')===cat);});
+  }
+  fetch('data/datasets.json').then(function(r){return r.json();}).then(function(d){
+    all=d;var cs=['All'];d.forEach(function(x){if(cs.indexOf(x.category)<0)cs.push(x.category);});
+    cats.innerHTML=cs.map(function(c){return '<button class="chip" data-c="'+DS.esc(c)+'">'+DS.esc(c)+'</button>';}).join('');
+    if(cs.indexOf(cat)<0)cat='All';render();
+  }).catch(function(){list.innerHTML='<div class="pending">Could not load the directory. Please refresh.</div>';});
+  cats.addEventListener('click',function(e){var c=e.target.getAttribute('data-c');if(!c)return;cat=c;history.replaceState(null,'',c==='All'?location.pathname:'#'+encodeURIComponent(c));render();});
+  document.getElementById('q').addEventListener('input',function(e){q=e.target.value;render();});
+})();
+</script>
+</body>
+</html>
