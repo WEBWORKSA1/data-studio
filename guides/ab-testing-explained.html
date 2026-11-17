@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A/B Testing Explained: Significance, Power, Sample Size & Common Mistakes | Data.Studio</title>
+<meta name="description" content="A clear explanation of A/B testing: hypotheses, p-values, confidence intervals, statistical power, sample size, test duration and the mistakes that invalidate experiments.">
+<link rel="canonical" href="https://data.studio/guides/ab-testing-explained.html">
+<meta property="og:type" content="article"><meta property="og:title" content="A/B testing, explained properly"><meta property="og:url" content="https://data.studio/guides/ab-testing-explained.html"><meta property="og:site_name" content="Data.Studio">
+<meta name="theme-color" content="#0A0F1F">
+<meta name="google-adsense-account" content="ca-pub-6620975821265271">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6620975821265271" crossorigin="anonymous"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"A/B testing, explained properly","author":{"@type":"Organization","name":"Data.Studio Editorial"},"publisher":{"@type":"Organization","name":"Data.Studio"},"datePublished":"2026-11-17","dateModified":"2026-11-17"}</script>
+</head>
+<body data-root="../">
+<div class="topbar"><a href="https://web.works/contact" target="_blank" rel="noopener">Contact, if you are interested in this website / domain name / Sponsorship / Advertisement / Partnership →</a></div>
+<header id="site-header"></header>
+<main id="main">
+<section class="page-hero"><div class="wrap">
+  <div class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Guides</a> / Statistics</div>
+  <h1>A/B testing, explained properly</h1>
+  <p>What significance really means, why sample size comes first, and the mistakes that quietly turn experiments into coin flips.</p>
+  <p class="meta-line">Data.Studio Editorial · Updated November 2026 · 10 min read</p>
+</div></section>
+<section class="section"><div class="wrap article">
+<article class="prose">
+<h2 style="margin-top:0">What an A/B test actually does</h2>
+<p>An A/B test randomly assigns users to a control (A) and a variant (B), then compares an outcome such as conversion rate. Randomisation is the magic ingredient. Because the groups differ only by chance and by the change you made, a large enough difference in outcomes can be attributed to the change.</p>
+<p>"Large enough" is the hard part. Even two identical pages will show different conversion rates on any given week, purely from random variation. Statistics tells us how big a difference must be before random variation stops being a plausible explanation.</p>
+
+<h2>The vocabulary, in plain English</h2>
+<ul>
+<li><strong>Null hypothesis:</strong> the default assumption that B performs the same as A.</li>
+<li><strong>p-value:</strong> if the null hypothesis were true, the probability of seeing a difference at least as large as the one observed. A p-value of 0.03 means "a gap this big would appear about 3% of the time by chance alone". It is <em>not</em> "a 97% chance B is better".</li>
+<li><strong>Significance level (α):</strong> the threshold you set in advance, commonly 0.05. If p &lt; α, you reject the null hypothesis.</li>
+<li><strong>Confidence interval:</strong> a range of plausible values for the true difference. It tells you the size of the effect, not just whether one exists.</li>
+<li><strong>Statistical power:</strong> the probability your test detects a real effect of a given size. 80% power means that if the effect is real, you'll catch it four times out of five.</li>
+<li><strong>Minimum detectable effect (MDE):</strong> the smallest real improvement your test is designed to detect at that power.</li>
+</ul>
+
+<h2>Sample size comes first</h2>
+<p>The single most common mistake is starting a test without deciding how long it will run. Sample size depends on three inputs:</p>
+<ol>
+<li><strong>Baseline rate.</strong> Lower baseline conversion rates need more traffic.</li>
+<li><strong>MDE.</strong> Smaller effects need far more traffic. Halving the MDE roughly quadruples the required sample.</li>
+<li><strong>α and power.</strong> Stricter thresholds need more data.</li>
+</ol>
+<p>For example, detecting a 10% relative lift on a 5% baseline (5.0% → 5.5%) at α = 0.05 and 80% power needs roughly 31,000 visitors <em>per variant</em>. Detecting a 20% lift needs about a quarter of that. Use the <a href="../tools/sample-size-calculator.html">Sample Size Calculator</a> to plan, then run the test until you reach that number. Not sooner, and not later.</p>
+
+<h2>Six mistakes that invalidate tests</h2>
+<h3>1. Peeking and stopping early</h3>
+<p>Checking results daily and stopping as soon as p dips below 0.05 dramatically inflates false positives, because random fluctuations cross the line far more often than 5% of the time over many looks. Fix: commit to a sample size, or use a sequential testing method designed for repeated looks.</p>
+<h3>2. Ignoring weekly cycles</h3>
+<p>Behaviour on Monday differs from Saturday. Run tests in whole weeks, at least one and ideally two, even if you hit the sample size sooner.</p>
+<h3>3. Sample ratio mismatch</h3>
+<p>If you planned a 50/50 split and got 52/48 on large traffic, something is wrong: a redirect losing users, a bot filter, a caching bug. Results from a broken split can't be trusted. Our <a href="../tools/ab-test-calculator.html">A/B Test Calculator</a> checks this automatically.</p>
+<h3>4. Testing too many metrics</h3>
+<p>Track twenty metrics at α = 0.05 and you should expect one "significant" result by chance. Pick one primary metric in advance. Treat the rest as guardrails or exploratory.</p>
+<h3>5. Novelty and primacy effects</h3>
+<p>Returning users may click a new design simply because it's new, or avoid it because it's unfamiliar. If the effect fades over time, look at new users separately or run longer.</p>
+<h3>6. Confusing significance with importance</h3>
+<p>With enough traffic, a 0.1% lift becomes "significant" while being commercially meaningless. Always read the confidence interval and translate it into money or users.</p>
+
+<h2>Reading a result</h2>
+<p>A good readout says: <em>"B increased checkout conversion from 5.0% to 5.8% (+16% relative). The 95% confidence interval for the absolute difference is +0.2 to +1.4 percentage points (p = 0.01). At current traffic, that's between X and Y extra orders per month."</em> It states the effect, the uncertainty and the business impact. Never just "it won".</p>
+
+<h2>When not to A/B test</h2>
+<ul>
+<li>When traffic is too low to reach a sensible MDE within a few weeks. Make bolder changes or use qualitative research.</li>
+<li>When the change is obviously right (fixing a broken button) or legally required.</li>
+<li>When the outcome takes months to observe. Use leading indicators carefully, or a holdout group.</li>
+</ul>
+<div class="callout"><strong>Try it:</strong> plan with the <a href="../tools/sample-size-calculator.html">Sample Size Calculator</a>, then analyse with the <a href="../tools/ab-test-calculator.html">A/B Test Calculator</a>. It shows the p-value, confidence interval and an SRM check.</div>
+</article>
+<aside class="aside-sticky">
+  <div class="card"><h3 style="margin-top:0">Check your test</h3><p>Significance, CI and SRM in seconds.</p><a class="btn btn-brand btn-sm mt-s" href="../tools/ab-test-calculator.html">A/B Test Calculator</a></div>
+  <div class="card" style="background:var(--ink);border-color:var(--ink)"><h3 style="margin-top:0;color:#fff">Build a testing program</h3><p style="color:#B9C0DA">Tracking audits, test design and analysis.</p><a class="btn btn-teal btn-sm mt-s" href="../services.html?service=Experimentation#brief">Talk to us</a></div>
+  <div class="card"><h3 style="margin-top:0">Related</h3><div class="toc"><a href="descriptive-statistics-primer.html">Descriptive statistics primer</a><a href="kpi-dashboard-design.html">KPI dashboard design</a><a href="../glossary.html#p-value">Glossary: p-value</a></div></div>
+</aside>
+</div></section>
+</main>
+<footer id="site-footer"></footer>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Data Cleaning Checklist: 12 Checks Before You Trust a Dataset | Data.Studio</title>
+<meta name="description" content="A practical 12-point data cleaning checklist: structure, duplicates, missing values, types, consistency, outliers, keys, dates, units and documentation, with examples and fixes.">
+<link rel="canonical" href="https://data.studio/guides/data-cleaning-checklist.html">
+<meta property="og:type" content="article"><meta property="og:title" content="The data cleaning checklist"><meta property="og:url" content="https://data.studio/guides/data-cleaning-checklist.html"><meta property="og:site_name" content="Data.Studio">
+<meta name="theme-color" content="#0A0F1F">
+<meta name="google-adsense-account" content="ca-pub-6620975821265271">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6620975821265271" crossorigin="anonymous"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"The data cleaning checklist","author":{"@type":"Organization","name":"Data.Studio Editorial"},"publisher":{"@type":"Organization","name":"Data.Studio"},"datePublished":"2026-11-17","dateModified":"2026-11-17"}</script>
+</head>
+<body data-root="../">
+<div class="topbar"><a href="https://web.works/contact" target="_blank" rel="noopener">Contact, if you are interested in this website / domain name / Sponsorship / Advertisement / Partnership →</a></div>
+<header id="site-header"></header>
+<main id="main">
+<section class="page-hero"><div class="wrap">
+  <div class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Guides</a> / Data quality</div>
+  <h1>The data cleaning checklist</h1>
+  <p>Twelve checks to run on any dataset before you build a chart, a model or a decision on it.</p>
+  <p class="meta-line">Data.Studio Editorial · Updated November 2026 · 9 min read</p>
+</div></section>
+<section class="section"><div class="wrap article">
+<article class="prose">
+<p style="margin-top:0">Analysts often joke that 80% of the job is cleaning data. The exact number is debatable, but the cost of skipping it isn't. A single duplicated import or a currency mix-up can make a dashboard confidently wrong. Work through these checks in order. Each one builds on the last.</p>
+
+<h2>Structure</h2>
+<h3>1. One table, one grain</h3>
+<p>Decide what one row represents: an order, an order line, a customer-day. Mixed grains (some rows are orders, others are line items) silently double-count. If you find subtotal or "Total" rows exported from a spreadsheet, remove them.</p>
+<h3>2. Headers are clean and unique</h3>
+<p>Every column needs a single-row, unique, descriptive name. Watch for merged header cells, trailing spaces (<code>"Email "</code>) and duplicates like two columns called <code>Date</code>. Consistent <code>snake_case</code> names make later work easier.</p>
+<h3>3. The data is "tidy"</h3>
+<p>Each variable should be a column, and each observation a row. A spreadsheet with months as columns (<code>Jan, Feb, Mar…</code>) is wide. Reshape it to long format (<code>month, value</code>) for most analysis and charting tools.</p>
+
+<h2>Completeness & uniqueness</h2>
+<h3>4. Duplicates are found and explained</h3>
+<p>Check for exact duplicate rows first, then for duplicates on the business key (the same order ID appearing twice with different values). Exact duplicates are usually import errors. Key duplicates need investigation: is one an update, a refund or a genuine second record?</p>
+<h3>5. Missing values are standardised and understood</h3>
+<p>Missing data hides in many disguises: blanks, <code>NA</code>, <code>N/A</code>, <code>null</code>, <code>-</code>, <code>0</code>, <code>9999</code>, <code>1900-01-01</code>. Convert genuine "unknowns" to one consistent empty value, but never turn a real zero into a blank. Then ask <em>why</em> values are missing. Missing at random is harmless. Missing for a reason (for example, only cancelled orders lack a delivery date) changes your analysis.</p>
+<h3>6. Primary keys are actually unique</h3>
+<p>If a column should identify each row (customer ID, SKU), confirm its distinct count equals the row count. If it doesn't, joins will multiply rows unexpectedly.</p>
+
+<h2>Validity & consistency</h2>
+<h3>7. Data types match meaning</h3>
+<p>Numbers stored as text won't sum. Text stored as numbers loses leading zeros (ZIP codes, phone numbers, product codes). Dates stored as text sort alphabetically, so <code>"10/1/2026"</code> lands before <code>"9/1/2026"</code>. Fix types deliberately, column by column.</p>
+<h3>8. Categories are consistent</h3>
+<p><code>"USA"</code>, <code>"U.S."</code>, <code>"United States"</code> and <code>"united states "</code> are four groups to a computer. Trim spaces, standardise casing, and map variants to a canonical list. A frequency table of each category column is the fastest way to spot them.</p>
+<h3>9. Dates and time zones are unambiguous</h3>
+<p>Is <code>03/04/2026</code> March 4 or April 3? Convert everything to ISO format (<code>2026-03-04</code>). For timestamps, record the time zone or store in UTC. Daily totals shift when events near midnight land in a different zone.</p>
+<h3>10. Units and currencies are aligned</h3>
+<p>Mixed units are the most expensive error on this list. Look for columns combining dollars and euros, grams and kilograms, or monthly and annual figures. Add a unit column if needed, convert, and note the exchange rates and dates you used.</p>
+
+<h2>Plausibility</h2>
+<h3>11. Outliers are investigated, not auto-deleted</h3>
+<p>Use the interquartile-range rule or simple sorting to find extreme values. Then classify each one: <strong>error</strong> (a $1,000,000 coffee is a typo, so fix or remove it), <strong>legitimate extreme</strong> (a real enterprise order, so keep it and consider reporting medians), or <strong>different population</strong> (internal test accounts, so filter them out). Write down which was which.</p>
+<h3>12. Totals reconcile with a trusted source</h3>
+<p>Compare row counts and key totals with the source system or finance figures. If your cleaned revenue is 3% off the accounting system, find out why before anyone sees a chart.</p>
+
+<h2>Document as you go</h2>
+<p>Keep a short cleaning log: what you changed, why, and how many rows were affected. It makes your work reproducible, defensible in meetings, and much faster to redo when next month's export arrives. Better still, automate the steps so they run the same way every time.</p>
+
+<div class="callout teal"><strong>Do it in minutes:</strong> run your file through the <a href="../tools/data-profiler.html">Data Profiler</a> to surface duplicates, gaps, stray spaces and outliers, then fix the common issues in the <a href="../tools/data-cleaner.html">Data Cleaner</a>, which produces a change log automatically.</div>
+</article>
+<aside class="aside-sticky">
+  <div class="card"><h3 style="margin-top:0">Profile your data</h3><p>Find quality issues in one click.</p><a class="btn btn-brand btn-sm mt-s" href="../tools/data-profiler.html">Open Data Profiler</a></div>
+  <div class="card" style="background:var(--ink);border-color:var(--ink)"><h3 style="margin-top:0;color:#fff">Messy CRM or catalogue?</h3><p style="color:#B9C0DA">Our specialists clean and migrate data at scale.</p><a class="btn btn-teal btn-sm mt-s" href="../services.html?service=Cleanup#brief">Get a cleanup quote</a></div>
+  <div class="card"><h3 style="margin-top:0">Related</h3><div class="toc"><a href="descriptive-statistics-primer.html">Descriptive statistics primer</a><a href="data-formats-csv-json-parquet.html">CSV vs JSON vs Parquet</a><a href="finding-and-evaluating-open-data.html">Evaluating open data</a></div></div>
+</aside>
+</div></section>
+</main>
+<footer id="site-footer"></footer>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/site.js"></script>
+</body>
+</html>

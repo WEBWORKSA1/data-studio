@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to Choose the Right Chart: A Question-First Framework | Data.Studio</title>
+<meta name="description" content="A practical framework for choosing the right chart: start from the question, match it to comparison, trend, composition, distribution or relationship, then refine for your audience.">
+<link rel="canonical" href="https://data.studio/guides/how-to-choose-the-right-chart.html">
+<meta property="og:type" content="article"><meta property="og:title" content="How to choose the right chart"><meta property="og:url" content="https://data.studio/guides/how-to-choose-the-right-chart.html"><meta property="og:site_name" content="Data.Studio">
+<meta name="theme-color" content="#0A0F1F">
+<meta name="google-adsense-account" content="ca-pub-6620975821265271">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6620975821265271" crossorigin="anonymous"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to choose the right chart","author":{"@type":"Organization","name":"Data.Studio Editorial"},"publisher":{"@type":"Organization","name":"Data.Studio"},"datePublished":"2026-11-17","dateModified":"2026-11-17"}</script>
+</head>
+<body data-root="../">
+<div class="topbar"><a href="https://web.works/contact" target="_blank" rel="noopener">Contact, if you are interested in this website / domain name / Sponsorship / Advertisement / Partnership →</a></div>
+<header id="site-header"></header>
+<main id="main">
+<section class="page-hero"><div class="wrap">
+  <div class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Guides</a> / Visualization</div>
+  <h1>How to choose the right chart</h1>
+  <p>Most bad charts aren't ugly. They answer the wrong question. Here's a framework that starts from the question and ends with a chart people understand in seconds.</p>
+  <p class="meta-line">Data.Studio Editorial · Updated November 2026 · 8 min read</p>
+</div></section>
+<section class="section"><div class="wrap article">
+<article class="prose">
+<h2 style="margin-top:0">Step 1: Write the question down</h2>
+<p>Before opening any tool, finish this sentence: <em>"After seeing this chart, my reader should know that…"</em>. "Revenue grew every month except April" is a trend question. "The North region sells twice as much as the South" is a comparison. "Most orders are under $50, but a few are over $1,000" is a distribution question. The sentence decides the chart. The data alone doesn't.</p>
+<p>If you can't finish the sentence, you're still exploring. That's fine, but exploratory charts for yourself and explanatory charts for an audience are different jobs. Explore freely, then rebuild the one chart that carries the message.</p>
+
+<h2>Step 2: Match the question to a family</h2>
+<table>
+<thead><tr><th>Your question is about…</th><th>Start with</th><th>Alternatives</th></tr></thead>
+<tbody>
+<tr><td><strong>Comparison</strong>: which is bigger?</td><td>Bar chart (sorted)</td><td>Dot plot, grouped bars</td></tr>
+<tr><td><strong>Change over time</strong></td><td>Line chart</td><td>Area chart, slope chart, column chart for few periods</td></tr>
+<tr><td><strong>Composition</strong>: parts of a whole</td><td>Stacked bar or 100% bar</td><td>Pie (2–5 parts), treemap, waterfall</td></tr>
+<tr><td><strong>Distribution</strong>: how values spread</td><td>Histogram</td><td>Box plot, density plot</td></tr>
+<tr><td><strong>Relationship</strong> between two measures</td><td>Scatter plot</td><td>Bubble chart, heatmap</td></tr>
+<tr><td><strong>Geography</strong></td><td>Choropleth (rates)</td><td>Symbol map (counts)</td></tr>
+<tr><td><strong>Flow</strong> between stages</td><td>Sankey or funnel</td><td>Waterfall</td></tr>
+</tbody></table>
+<p>Our interactive <a href="../chart-guide.html">Chart Guide</a> lets you filter 24 chart types by these families.</p>
+
+<h2>Step 3: Respect how eyes read charts</h2>
+<p>Decades of perception research point to a consistent ranking. People judge <strong>position along a common scale</strong> most accurately, then length, then angle and area, and finally colour intensity. That explains a few durable rules:</p>
+<ul>
+<li><strong>Bars beat pies</strong> for anything beyond a rough share, because comparing bar lengths is easier than comparing slice angles.</li>
+<li><strong>Bar charts start at zero.</strong> The bar's length is the encoding, so a truncated axis exaggerates differences. Line charts can zoom in, because their encoding is position and slope.</li>
+<li><strong>Bubble sizes mislead.</strong> Doubling a value should double a bubble's area, not its diameter. Even when done right, readers underestimate area differences.</li>
+<li><strong>Colour is for categories or emphasis</strong>, not for precise values. Use one highlight colour for the thing you're talking about and grey for context.</li>
+</ul>
+
+<h2>Step 4: Design for the reader, not the dataset</h2>
+<h3>Sort with purpose</h3>
+<p>Unless categories have a natural order (months, age bands, survey scales), sort bars by value. A sorted chart turns a lookup task into a ranking the eye reads instantly.</p>
+<h3>Label directly</h3>
+<p>Legends make readers bounce between key and chart. Place series names at the end of lines and values on or beside bars where space allows.</p>
+<h3>Title with the finding</h3>
+<p>"Monthly revenue, 2026" describes the axes. "Revenue grew 47% in six months, led by the app" tells the story. The second gets remembered.</p>
+<h3>Cut what doesn't carry information</h3>
+<p>Heavy gridlines, 3D effects, drop shadows and decorative backgrounds compete with the data. Remove them, then check whether anything important disappeared. Usually nothing did.</p>
+
+<h2>Common mistakes and quick fixes</h2>
+<ul>
+<li><strong>Too many lines ("spaghetti chart").</strong> Highlight one or two series and grey out the rest, or use small multiples, one mini chart per series on shared axes.</li>
+<li><strong>Pie with 12 slices.</strong> Switch to a sorted horizontal bar chart, or group small slices into "Other".</li>
+<li><strong>Dual y-axes.</strong> Two scales on one chart invite false correlations. Use two charts stacked vertically with a shared x-axis.</li>
+<li><strong>Counts on a map.</strong> Population drives raw counts. Map rates per capita instead.</li>
+<li><strong>Uneven time intervals</strong> drawn evenly spaced. Make sure the axis reflects real time gaps.</li>
+</ul>
+
+<h2>Accessibility checklist</h2>
+<ul>
+<li>Don't rely on colour alone. Add labels, patterns or direct annotations.</li>
+<li>Choose palettes distinguishable with common colour-vision deficiencies (avoid red/green as the only contrast).</li>
+<li>Keep text at least 12px and maintain good contrast against the background.</li>
+<li>Provide a one-sentence text summary of the key finding near the chart.</li>
+</ul>
+
+<div class="callout"><strong>Try it now:</strong> paste your data into the <a href="../tools/chart-maker.html">Chart Maker</a>, sort the bars, and write a title that states your finding. Most charts improve dramatically from those three moves alone.</div>
+</article>
+<aside class="aside-sticky">
+  <div class="card"><h3 style="margin-top:0">Make a chart</h3><p>Free, private, exports to PNG.</p><a class="btn btn-brand btn-sm mt-s" href="../tools/chart-maker.html">Open Chart Maker</a></div>
+  <div class="card" style="background:var(--ink);border-color:var(--ink)"><h3 style="margin-top:0;color:#fff">Need a dashboard?</h3><p style="color:#B9C0DA">We design and build dashboards your team will use.</p><a class="btn btn-teal btn-sm mt-s" href="../services.html?service=Dashboard#brief">Get a proposal</a></div>
+  <div class="card"><h3 style="margin-top:0">Related</h3><div class="toc"><a href="kpi-dashboard-design.html">KPI dashboard design</a><a href="descriptive-statistics-primer.html">Descriptive statistics primer</a><a href="../chart-guide.html">Interactive chart guide</a></div></div>
+</aside>
+</div></section>
+</main>
+<footer id="site-footer"></footer>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/site.js"></script>
+</body>
+</html>

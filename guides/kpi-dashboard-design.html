@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KPI Dashboard Design: How to Build Dashboards People Actually Use | Data.Studio</title>
+<meta name="description" content="How to design a KPI dashboard that drives action: define the audience and decisions, choose and define metrics, lay out a clear visual hierarchy, add context and keep it trusted.">
+<link rel="canonical" href="https://data.studio/guides/kpi-dashboard-design.html">
+<meta property="og:type" content="article"><meta property="og:title" content="KPI dashboard design that gets used"><meta property="og:url" content="https://data.studio/guides/kpi-dashboard-design.html"><meta property="og:site_name" content="Data.Studio">
+<meta name="theme-color" content="#0A0F1F">
+<meta name="google-adsense-account" content="ca-pub-6620975821265271">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6620975821265271" crossorigin="anonymous"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"KPI dashboard design that gets used","author":{"@type":"Organization","name":"Data.Studio Editorial"},"publisher":{"@type":"Organization","name":"Data.Studio"},"datePublished":"2026-11-17","dateModified":"2026-11-17"}</script>
+</head>
+<body data-root="../">
+<div class="topbar"><a href="https://web.works/contact" target="_blank" rel="noopener">Contact, if you are interested in this website / domain name / Sponsorship / Advertisement / Partnership →</a></div>
+<header id="site-header"></header>
+<main id="main">
+<section class="page-hero"><div class="wrap">
+  <div class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Guides</a> / Dashboards</div>
+  <h1>KPI dashboard design that gets used</h1>
+  <p>Most dashboards die within a quarter of launch. The ones that survive answer a specific person's specific questions, fast. Here's how to build one of those.</p>
+  <p class="meta-line">Data.Studio Editorial · Updated November 2026 · 9 min read</p>
+</div></section>
+<section class="section"><div class="wrap article">
+<article class="prose">
+<h2 style="margin-top:0">1. Start with decisions, not data</h2>
+<p>Before choosing a single chart, interview the people who'll use the dashboard and ask: <em>"What decisions do you make weekly, and what do you need to know to make them?"</em> A sales director deciding where to focus reps needs pipeline by region and stage. A support lead deciding whether to add staff needs ticket volume, backlog and response times against target.</p>
+<p>Write each decision and its question at the top of your design document. Every element on the dashboard must serve one of them. If it doesn't, it belongs in an ad-hoc analysis, not here.</p>
+
+<h2>2. Choose few metrics, and define them precisely</h2>
+<p>A useful rule of thumb is <strong>five to nine headline KPIs</strong> per dashboard. More than that and nothing is "key". For each metric, write a definition card:</p>
+<table>
+<thead><tr><th>Field</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td>Name</td><td>Net revenue</td></tr>
+<tr><td>Definition</td><td>Gross order value minus discounts, refunds and taxes, excluding shipping</td></tr>
+<tr><td>Grain & timing</td><td>Daily, by order date, in UTC</td></tr>
+<tr><td>Source</td><td>Orders table, refreshed hourly</td></tr>
+<tr><td>Owner</td><td>Finance team</td></tr>
+<tr><td>Target</td><td>$1.2M per month</td></tr>
+</tbody></table>
+<p>Definitions prevent the meeting where three people bring three different revenue numbers. Publish them alongside the dashboard.</p>
+<h3>Balance leading and lagging indicators</h3>
+<p>Revenue and churn are lagging. They tell you what already happened. Pair them with leading indicators you can act on today: qualified leads, trial activations, onboarding completion, response time.</p>
+
+<h2>3. Lay out a visual hierarchy</h2>
+<p>Readers scan from top-left in a rough Z or F pattern. Use that:</p>
+<ol>
+<li><strong>Top row: headline KPIs</strong> as large numbers, each with a comparison (vs target, vs last period) and a small trend sparkline.</li>
+<li><strong>Middle: trends and breakdowns</strong> that explain the headline, such as revenue over time or revenue by channel.</li>
+<li><strong>Bottom: detail</strong> tables for drilling in, which few people need every day.</li>
+</ol>
+<p>Group related metrics together, align everything to a grid, and keep consistent colours. If "Web" is blue in one chart, it's blue everywhere.</p>
+
+<h2>4. Context turns numbers into signals</h2>
+<p>"Revenue: $842,000" is a fact. "Revenue: $842,000, 6% below target, up 12% year-on-year" is information. Every headline number needs at least one comparison. Use colour sparingly for status: reserve red and green for genuine "act now" thresholds, and make sure status is also shown with text or icons for colour-blind users.</p>
+
+<h2>5. Choose charts for quick reading</h2>
+<ul>
+<li><strong>Big number + sparkline</strong> for KPIs.</li>
+<li><strong>Line charts</strong> for trends. Show the same period last year as a lighter line for seasonality.</li>
+<li><strong>Sorted bar charts</strong> for comparisons across categories.</li>
+<li><strong>Bullet charts</strong> (a bar against a target marker) instead of gauges, which take up space and are hard to compare.</li>
+<li><strong>Avoid</strong> 3D charts, pies with many slices and dual-axis charts on executive dashboards.</li>
+</ul>
+<p>See <a href="how-to-choose-the-right-chart.html">How to choose the right chart</a> for the full framework.</p>
+
+<h2>6. Make it trustworthy</h2>
+<p>A dashboard that's wrong once loses its audience for months. Build trust deliberately:</p>
+<ul>
+<li>Show a visible <strong>"last refreshed"</strong> timestamp.</li>
+<li>Automate refreshes. Manual copy-paste pipelines eventually break silently.</li>
+<li>Add data-quality checks (row counts, null rates, reconciliation to finance) that alert you before users notice.</li>
+<li>Version-control metric definitions, and announce changes.</li>
+</ul>
+
+<h2>7. Launch, then iterate</h2>
+<p>Ship a focused first version, watch how it's used, and schedule a review after four weeks. Remove elements nobody looks at. Ask users what question they still answer outside the dashboard, and that's your next addition. Usage analytics, if your BI tool provides them, are the most honest feedback you'll get.</p>
+
+<div class="callout teal"><strong>Prototype fast:</strong> mock up your headline charts with the <a href="../tools/chart-maker.html">Chart Maker</a> and test your metric logic with the <a href="../tools/pivot-table.html">Pivot Table</a> before committing to a BI build.</div>
+</article>
+<aside class="aside-sticky">
+  <div class="card" style="background:var(--ink);border-color:var(--ink)"><h3 style="margin-top:0;color:#fff">Want it built for you?</h3><p style="color:#B9C0DA">Fixed-scope KPI dashboards with documented metrics and automated refresh.</p><a class="btn btn-teal btn-sm mt-s" href="../services.html?service=Dashboard#brief">Get a free proposal</a></div>
+  <div class="card"><h3 style="margin-top:0">Prototype a chart</h3><a class="btn btn-brand btn-sm mt-s" href="../tools/chart-maker.html">Open Chart Maker</a></div>
+  <div class="card"><h3 style="margin-top:0">Related</h3><div class="toc"><a href="how-to-choose-the-right-chart.html">How to choose the right chart</a><a href="pivot-tables-explained.html">Pivot tables explained</a><a href="../glossary.html#kpi">Glossary: KPI</a></div></div>
+</aside>
+</div></section>
+</main>
+<footer id="site-footer"></footer>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/site.js"></script>
+</body>
+</html>
