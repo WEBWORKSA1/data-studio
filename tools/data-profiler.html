@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Profiler — Free CSV Summary Statistics & Data Quality Check | Data.Studio</title>
+<meta name="description" content="Profile any CSV instantly: column types, missing values, distinct counts, duplicates, outliers, distributions, mean, median, standard deviation and top values. Free and private.">
+<link rel="canonical" href="https://data.studio/tools/data-profiler.html">
+<meta property="og:title" content="Data Profiler | Data.Studio"><meta property="og:url" content="https://data.studio/tools/data-profiler.html"><meta property="og:site_name" content="Data.Studio">
+<meta name="theme-color" content="#0A0F1F">
+<meta name="google-adsense-account" content="ca-pub-6620975821265271">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6620975821265271" crossorigin="anonymous"></script>
+</head>
+<body data-root="../">
+<div class="topbar"><a href="https://web.works/contact" target="_blank" rel="noopener">Contact, if you are interested in this website / domain name / Sponsorship / Advertisement / Partnership →</a></div>
+<header id="site-header"></header>
+<main id="main">
+<section class="page-hero"><div class="wrap">
+  <div class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Tools</a> / Data Profiler</div>
+  <h1>Data Profiler</h1>
+  <p>Know your data before you trust it. Get a full quality and statistics report for any CSV in one click, computed privately in your browser.</p>
+</div></section>
+<section class="section">
+  <div class="wrap">
+    <div class="panel">
+      <div class="grid g2">
+        <div><div class="dropzone" id="dz" tabindex="0" role="button" style="min-height:150px;display:grid;place-items:center"><input type="file" accept=".csv,.tsv,.txt,text/csv"><span>📂 Drop a CSV file here or <u>browse</u><br><small>Up to ~25 MB works smoothly</small></span></div></div>
+        <div><label for="csv">…or paste CSV</label><textarea id="csv" class="code" spellcheck="false" style="min-height:150px"></textarea></div>
+      </div>
+      <div class="btn-row mt-s"><button class="btn btn-brand" id="run" type="button">Profile data</button><button class="btn btn-ghost" id="sample" type="button">Try a sample</button><button class="btn btn-ghost" id="export" type="button">⬇ Export profile (CSV)</button></div>
+    </div>
+    <div id="overview" class="kpis mt"></div>
+    <div id="issues" class="mt-s"></div>
+    <div id="cols" class="colcards mt"></div>
+  </div>
+</section>
+<section class="section section-alt"><div class="wrap prose">
+  <h2 style="margin-top:0">What the profiler checks</h2>
+  <ul>
+    <li><strong>Type inference.</strong> Each column is classified as numeric, date, boolean or text, based on at least 90% of its non-empty values.</li>
+    <li><strong>Completeness.</strong> Missing values are counted per column and across the whole table. Blank strings and common null tokens (NA, N/A, null, -) count as missing.</li>
+    <li><strong>Uniqueness.</strong> Distinct counts reveal ID columns (100% unique) and low-cardinality categories. Exact duplicate rows are counted for the table.</li>
+    <li><strong>Distribution.</strong> Numeric columns get min, quartiles, median, mean, standard deviation, max and a histogram. Values beyond 1.5× the interquartile range are flagged as potential outliers.</li>
+    <li><strong>Top values.</strong> Text columns show their most frequent values, which is great for spotting typos like "New York" vs "new york ".</li>
+  </ul>
+  <p>Found problems? Fix them with the <a href="data-cleaner.html">Data Cleaner</a>, then read the <a href="../guides/data-cleaning-checklist.html">data cleaning checklist</a>.</p>
+</div></section>
+<div class="sticky-cta"><span>Data quality issues across many systems?</span><a class="btn btn-brand btn-sm" href="../services.html?service=Cleanup#brief">Get a cleanup quote</a><button class="x" aria-label="Dismiss">×</button></div>
+</main>
+<footer id="site-footer"></footer>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/site.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="../assets/js/tools.js"></script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);},profile=[];
+  var NULLS={'':1,'na':1,'n/a':1,'null':1,'none':1,'-':1,'nan':1,'#n/a':1};
+  var SAMPLE='order_id,date,customer,country,channel,units,unit_price,discount,returned\n1001,2026-01-03,Ana Silva,Portugal,Web,2,19.99,0,false\n1002,2026-01-03,Ben Okafor,Nigeria,App,1,49.00,0.1,false\n1003,2026-01-04,Chen Wei,China,Web,5,9.50,,false\n1004,2026-01-05,dara singh,Canada,Store,1,199.00,0,true\n1005,2026-01-05,Eva Müller,Germany,Web,3,19.99,0.05,false\n1006,2026-01-06,Farah Khan,India,App,12,4.99,0,false\n1007,2026-01-06,Gus Roy,USA,Web,1,1499.00,0,false\n1008,2026-01-07,Hana Sato,Japan,N/A,2,49.00,0.1,false\n1008,2026-01-07,Hana Sato,Japan,N/A,2,49.00,0.1,false\n1009,2026-01-08,Ivan Petrov,,Web,4,19.99,0,true\n1010,2026-01-08,Jade Lee,Canada,Store,2,24.00,0.2,false';
+  function isNull(v){return v==null||NULLS[String(v).trim().toLowerCase()]===1;}
+  function typeOf(vals){
+    if(!vals.length)return 'empty';
+    var n=vals.length,num=0,bool=0,date=0;
+    vals.forEach(function(v){var s=String(v).trim();if(DST.toNum(s)!==null)num++;if(/^(true|false|yes|no)$/i.test(s))bool++;if(/^\d{4}-\d{1,2}-\d{1,2}|^\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4}/.test(s)&&!isNaN(Date.parse(s.replace(/\./g,'/'))))date++;});
+    if(bool/n>=.9)return 'boolean';if(date/n>=.9)return 'date';if(num/n>=.9)return 'numeric';return 'text';
+  }
+  function f(n,d){return DS.fmtNum(n,d==null?(Math.abs(n)>=1000?0:2):d);}
+  function run(){
+    var p=DST.parse($('csv').value,{typed:false});
+    if(!p.fields.length){$('overview').innerHTML='<div class="pending">No data found. Check the first line contains headers.</div>';return;}
+    var rows=p.rows,R=rows.length,C=p.fields.length,miss=0,seen={},dups=0;
+    rows.forEach(function(r){var k=JSON.stringify(p.fields.map(function(c){return r[c];}));if(seen[k])dups++;else seen[k]=1;});
+    profile=p.fields.map(function(c){
+      var all=rows.map(function(r){return r[c];}),vals=all.filter(function(v){return !isNull(v);}),m=R-vals.length;miss+=m;
+      var counts={};vals.forEach(function(v){var s=String(v);counts[s]=(counts[s]||0)+1;});
+      var distinct=Object.keys(counts).length,t=typeOf(vals),o={name:c,type:t,count:vals.length,missing:m,distinct:distinct};
+      if(t==='numeric'){var nums=vals.map(DST.toNum).filter(function(x){return x!==null;}),s=DST.stats(nums);o.s=s;var iqr=s.q3-s.q1;o.outliers=nums.filter(function(x){return x<s.q1-1.5*iqr||x>s.q3+1.5*iqr;}).length;
+        var bins=12,span=(s.max-s.min)||1,h=new Array(bins).fill(0);nums.forEach(function(x){h[Math.min(bins-1,Math.floor((x-s.min)/span*bins))]++;});o.hist=h;}
+      else{o.top=Object.keys(counts).sort(function(a,b){return counts[b]-counts[a];}).slice(0,5).map(function(k){return [k,counts[k]];});if(t==='text'){var L=0;vals.forEach(function(v){L+=String(v).length;});o.avgLen=vals.length?L/vals.length:0;o.trail=vals.filter(function(v){return String(v)!==String(v).trim();}).length;}
+        if(t==='date'){var ds=vals.map(function(v){return Date.parse(String(v).replace(/\./g,'/'));}).filter(isFinite).sort(function(a,b){return a-b;});o.min=new Date(ds[0]).toISOString().slice(0,10);o.max=new Date(ds[ds.length-1]).toISOString().slice(0,10);}}
+      return o;});
+    var numC=profile.filter(function(x){return x.type==='numeric';}).length;
+    $('overview').innerHTML=[['Rows',R.toLocaleString()],['Columns',C],['Missing cells',(R*C?(miss/(R*C)*100).toFixed(1):0)+'%'],['Duplicate rows',dups.toLocaleString()],['Numeric columns',numC],['Other columns',C-numC]].map(function(k){return '<div class="kpi-box"><span>'+k[0]+'</span><b class="kpi">'+k[1]+'</b></div>';}).join('');
+    var iss=[];if(dups)iss.push(dups+' exact duplicate row'+(dups>1?'s':''));
+    profile.forEach(function(x){if(x.missing/R>.2)iss.push('“'+x.name+'” is '+Math.round(x.missing/R*100)+'% empty');if(x.trail)iss.push('“'+x.name+'” has '+x.trail+' value(s) with leading/trailing spaces');if(x.outliers)iss.push('“'+x.name+'” has '+x.outliers+' potential outlier(s)');if(x.distinct===1&&R>1)iss.push('“'+x.name+'” has a single constant value');});
+    $('issues').innerHTML=iss.length?'<div class="verdict bad"><strong>'+iss.length+' thing'+(iss.length>1?'s':'')+' to check:</strong><ul style="margin:6px 0 0;padding-left:20px">'+iss.map(function(i){return '<li>'+DS.esc(i)+'</li>';}).join('')+'</ul></div>':'<div class="verdict good"><strong>Looks clean.</strong> No duplicates, heavy gaps, stray spaces or outliers detected.</div>';
+    var badge={numeric:'',text:'gray',date:'teal',boolean:'amber',empty:'rose'};
+    $('cols').innerHTML=profile.map(function(x){
+      var h='<div class="colcard"><h4>'+DS.esc(x.name)+'</h4><span class="badge '+badge[x.type]+'">'+x.type+'</span><dl><dt>Filled</dt><dd>'+x.count.toLocaleString()+'</dd><dt>Missing</dt><dd'+(x.missing?' class="result-bad"':'')+'>'+x.missing.toLocaleString()+' ('+(R?(x.missing/R*100).toFixed(1):0)+'%)</dd><dt>Distinct</dt><dd>'+x.distinct.toLocaleString()+(x.distinct===x.count&&x.count>1?' · unique':'')+'</dd>';
+      if(x.s)h+='<dt>Mean</dt><dd>'+f(x.s.mean)+'</dd><dt>Median</dt><dd>'+f(x.s.median)+'</dd><dt>Std dev</dt><dd>'+f(x.s.std)+'</dd><dt>Min / Max</dt><dd>'+f(x.s.min)+' / '+f(x.s.max)+'</dd><dt>Q1 / Q3</dt><dd>'+f(x.s.q1)+' / '+f(x.s.q3)+'</dd><dt>Outliers</dt><dd'+(x.outliers?' class="result-warn"':'')+'>'+x.outliers+'</dd>';
+      if(x.avgLen!=null)h+='<dt>Avg length</dt><dd>'+x.avgLen.toFixed(1)+'</dd>';
+      if(x.min)h+='<dt>Range</dt><dd>'+x.min+' → '+x.max+'</dd>';
+      h+='</dl>';
+      if(x.hist){var mx=Math.max.apply(null,x.hist)||1;h+='<div class="hist" title="Distribution">'+x.hist.map(function(v){return '<i style="height:'+Math.max(3,v/mx*100)+'%" title="'+v+'"></i>';}).join('')+'</div>';}
+      if(x.top)h+='<p class="form-note" style="margin-top:10px"><strong>Top values:</strong><br>'+x.top.map(function(t){return DS.esc(t[0].length>28?t[0].slice(0,28)+'…':t[0])+' <span class="muted">('+t[1]+')</span>';}).join('<br>')+'</p>';
+      return h+'</div>';}).join('');
+  }
+  $('run').onclick=run;
+  $('sample').onclick=function(){$('csv').value=SAMPLE;run();};
+  $('export').onclick=function(){if(!profile.length)return;var rows=profile.map(function(x){return {column:x.name,type:x.type,filled:x.count,missing:x.missing,distinct:x.distinct,mean:x.s?x.s.mean:'',median:x.s?x.s.median:'',std:x.s?x.s.std:'',min:x.s?x.s.min:(x.min||''),max:x.s?x.s.max:(x.max||''),outliers:x.outliers!=null?x.outliers:''};});DST.download('data-profile.csv',Papa.unparse(rows),'text/csv');};
+  DST.dropzone($('dz'),$('csv'),run);
+  $('csv').value=SAMPLE;run();
+})();
+</script>
+</body>
+</html>

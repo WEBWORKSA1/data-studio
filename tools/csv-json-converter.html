@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSV to JSON Converter (and JSON to CSV) — Free & Private | Data.Studio</title>
+<meta name="description" content="Convert CSV to JSON and JSON to CSV instantly in your browser. Auto-detects delimiters, types numbers and booleans, flattens nested JSON, pretty-prints, and downloads. Free, no upload.">
+<link rel="canonical" href="https://data.studio/tools/csv-json-converter.html">
+<meta property="og:title" content="CSV ⇄ JSON Converter | Data.Studio"><meta property="og:url" content="https://data.studio/tools/csv-json-converter.html"><meta property="og:site_name" content="Data.Studio">
+<meta name="theme-color" content="#0A0F1F">
+<meta name="google-adsense-account" content="ca-pub-6620975821265271">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6620975821265271" crossorigin="anonymous"></script>
+</head>
+<body data-root="../">
+<div class="topbar"><a href="https://web.works/contact" target="_blank" rel="noopener">Contact, if you are interested in this website / domain name / Sponsorship / Advertisement / Partnership →</a></div>
+<header id="site-header"></header>
+<main id="main">
+<section class="page-hero"><div class="wrap">
+  <div class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Tools</a> / CSV ⇄ JSON</div>
+  <h1>CSV ⇄ JSON Converter</h1>
+  <p>Convert spreadsheets to JSON for APIs and apps, or flatten JSON into a CSV you can open in Excel. Instant, private and free.</p>
+</div></section>
+<section class="section">
+  <div class="wrap tool">
+    <div class="panel">
+      <div class="field"><label for="mode">Direction</label><select id="mode"><option value="c2j">CSV → JSON</option><option value="j2c">JSON → CSV</option></select></div>
+      <div class="dropzone" id="dz" tabindex="0" role="button"><input type="file" accept=".csv,.tsv,.txt,.json,application/json,text/csv">📂 Drop a file here or <u>browse</u></div>
+      <div class="field"><label for="in">Input</label><textarea id="in" class="code" spellcheck="false"></textarea></div>
+      <div class="field-row">
+        <div class="field"><label for="delim">Delimiter</label><select id="delim"><option value="">Auto-detect</option><option value=",">Comma ,</option><option value=";">Semicolon ;</option><option value="\t">Tab</option><option value="|">Pipe |</option></select></div>
+        <div class="field" id="shape-f"><label for="shape">JSON shape</label><select id="shape"><option value="objects">Array of objects</option><option value="arrays">Array of arrays</option><option value="keyed">Keyed by first column</option></select></div>
+      </div>
+      <div class="field" id="opts-c2j">
+        <label class="check"><input type="checkbox" id="typed" checked> Convert numbers & booleans</label>
+        <label class="check"><input type="checkbox" id="pretty" checked> Pretty print (2 spaces)</label>
+      </div>
+      <div class="btn-row"><button class="btn btn-ghost btn-sm" id="sample" type="button">Load sample</button><button class="btn btn-brand btn-sm" id="go" type="button">Convert →</button></div>
+    </div>
+    <div class="panel">
+      <div class="toolbar"><button class="btn btn-ghost btn-sm" id="copy" type="button">Copy</button><button class="btn btn-brand btn-sm" id="dl" type="button">⬇ Download</button><span class="muted" id="info" style="font-size:.88rem"></span></div>
+      <pre class="code" id="out" style="min-height:340px">Output appears here.</pre>
+    </div>
+  </div>
+</section>
+<section class="section section-alt"><div class="wrap prose">
+  <h2 style="margin-top:0">How the converter works</h2>
+  <p><strong>CSV → JSON</strong> reads the first row as field names and turns each following row into an object. Turn on type conversion and values like <code>42</code>, <code>3.14</code> and <code>true</code> become real numbers and booleans instead of strings. Pick <em>Array of arrays</em> for compact output, or <em>Keyed by first column</em> to build a lookup object (useful when the first column is a unique ID).</p>
+  <p><strong>JSON → CSV</strong> accepts an array of objects, a single object, or an object holding an array. Nested objects are flattened using dot notation: <code>{"user":{"name":"Ana"}}</code> becomes a <code>user.name</code> column. Arrays inside a record are kept as JSON text in a single cell, so nothing is lost. Columns are the union of all keys, so records with missing fields still line up.</p>
+  <h3>Common gotchas</h3>
+  <ul>
+    <li><strong>Leading zeros</strong> (ZIP codes, phone numbers) get stripped when converted to numbers. Turn off type conversion to keep them as text.</li>
+    <li><strong>European CSVs</strong> often use semicolons, because the comma is the decimal separator. Auto-detect handles this, or choose the delimiter manually.</li>
+    <li><strong>Quotes and line breaks</strong> inside fields are handled per RFC 4180 by the PapaParse library.</li>
+  </ul>
+  <p>Want to understand when to use each format? Read <a href="../guides/data-formats-csv-json-parquet.html">CSV vs JSON vs Parquet</a>.</p>
+</div></section>
+<div class="sticky-cta"><span>Moving data between systems every week?</span><a class="btn btn-brand btn-sm" href="../services.html?service=Automation#brief">Automate the pipeline</a><button class="x" aria-label="Dismiss">×</button></div>
+</main>
+<footer id="site-footer"></footer>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/site.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="../assets/js/tools.js"></script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  var inp=$('in'),out=$('out'),info=$('info'),result='';
+  var S_CSV='id,name,city,active,score\n1,Ana Silva,Lisbon,true,91.5\n2,Ben Okafor,Lagos,false,78\n3,Chen Wei,Shanghai,true,88.25\n4,Dara Singh,Toronto,true,95';
+  var S_JSON='[\n  {"id": 1, "user": {"name": "Ana", "country": "PT"}, "tags": ["pro", "beta"], "spend": 120.5},\n  {"id": 2, "user": {"name": "Ben", "country": "NG"}, "tags": [], "spend": 80},\n  {"id": 3, "user": {"name": "Chen"}, "spend": 210.25, "coupon": "WELCOME"}\n]';
+  function mode(){return $('mode').value;}
+  function ui(){var c=mode()==='c2j';$('opts-c2j').style.display=c?'':'none';$('shape-f').style.visibility=c?'visible':'hidden';}
+  function flatten(o,pre,res){Object.keys(o).forEach(function(k){var v=o[k],key=pre?pre+'.'+k:k;if(v&&typeof v==='object'&&!Array.isArray(v))flatten(v,key,res);else if(Array.isArray(v))res[key]=JSON.stringify(v);else res[key]=v;});return res;}
+  function convert(){
+    var t=inp.value.trim();if(!t){out.textContent='Add some input first.';return;}
+    try{
+      if(mode()==='c2j'){
+        var shape=$('shape').value,typed=$('typed').checked,sp=$('pretty').checked?2:0,val;
+        if(shape==='arrays'){var r=Papa.parse(t,{header:false,skipEmptyLines:'greedy',dynamicTyping:typed,delimiter:$('delim').value});val=r.data;}
+        else{var p=DST.parse(t,{typed:typed,delimiter:$('delim').value});val=p.rows;if(shape==='keyed'){var k=p.fields[0],o={};val.forEach(function(row){o[row[k]]=row;});val=o;}}
+        result=JSON.stringify(val,null,sp);
+        info.textContent=(Array.isArray(val)?val.length:Object.keys(val).length).toLocaleString()+' records';
+      }else{
+        var j=JSON.parse(t);
+        if(!Array.isArray(j)){var arr=Object.keys(j).map(function(k){return j[k];}).filter(Array.isArray)[0];j=arr||[j];}
+        var rows=j.map(function(x){return x&&typeof x==='object'?flatten(x,'',{}):{value:x};}),fields=[];
+        rows.forEach(function(r){Object.keys(r).forEach(function(k){if(fields.indexOf(k)<0)fields.push(k);});});
+        result=Papa.unparse({fields:fields,data:rows.map(function(r){return fields.map(function(f){return r[f]==null?'':r[f];});})},{delimiter:$('delim').value||','});
+        info.textContent=rows.length.toLocaleString()+' rows · '+fields.length+' columns';
+      }
+      out.textContent=result.length>400000?result.slice(0,400000)+'\n… (preview truncated, download for full output)':result;
+    }catch(e){result='';out.textContent='Could not convert: '+e.message;info.textContent='';}
+  }
+  $('mode').addEventListener('change',function(){ui();inp.value='';out.textContent='Output appears here.';});
+  $('sample').onclick=function(){inp.value=mode()==='c2j'?S_CSV:S_JSON;convert();};
+  $('go').onclick=convert;
+  $('copy').onclick=function(){if(result)DST.copy(result,$('copy'));};
+  $('dl').onclick=function(){if(!result)return;var c=mode()==='c2j';DST.download(c?'data.json':'data.csv',result,c?'application/json':'text/csv;charset=utf-8');};
+  DST.dropzone($('dz'),inp,function(f){if(/\.json$/i.test(f.name)){$('mode').value='j2c';ui();}else if(/\.(csv|tsv|txt)$/i.test(f.name)){$('mode').value='c2j';ui();}convert();});
+  ui();inp.value=S_CSV;convert();
+})();
+</script>
+</body>
+</html>

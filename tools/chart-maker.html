@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Chart Maker — Make Charts from CSV Online | Data.Studio</title>
+<meta name="description" content="Make bar, line, area, pie, doughnut, scatter, radar and stacked charts from CSV data, free and private in your browser. Download a high-resolution PNG. No sign-up.">
+<link rel="canonical" href="https://data.studio/tools/chart-maker.html">
+<meta property="og:title" content="Free Chart Maker | Data.Studio"><meta property="og:url" content="https://data.studio/tools/chart-maker.html"><meta property="og:site_name" content="Data.Studio">
+<meta name="theme-color" content="#0A0F1F">
+<meta name="google-adsense-account" content="ca-pub-6620975821265271">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6620975821265271" crossorigin="anonymous"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Data.Studio Chart Maker","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://data.studio/tools/chart-maker.html"}</script>
+</head>
+<body data-root="../">
+<div class="topbar"><a href="https://web.works/contact" target="_blank" rel="noopener">Contact, if you are interested in this website / domain name / Sponsorship / Advertisement / Partnership →</a></div>
+<header id="site-header"></header>
+<main id="main">
+<section class="page-hero"><div class="wrap">
+  <div class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Tools</a> / Chart Maker</div>
+  <h1>Chart Maker</h1>
+  <p>Paste or drop a CSV, pick your columns, and get a clean, presentation-ready chart. Runs entirely in your browser.</p>
+</div></section>
+<section class="section">
+  <div class="wrap tool">
+    <div class="panel">
+      <h2>1. Your data</h2>
+      <div class="dropzone" id="dz" tabindex="0" role="button" aria-label="Upload CSV file"><input type="file" accept=".csv,.tsv,.txt,text/csv">📂 Drop a CSV here or <u>browse</u></div>
+      <div class="field"><label for="csv">…or paste CSV (first row = headers)</label><textarea id="csv" class="code" spellcheck="false"></textarea></div>
+      <div class="btn-row"><button class="btn btn-ghost btn-sm" id="sample" type="button">Load sample</button><button class="btn btn-brand btn-sm" id="load" type="button">Read data</button></div>
+      <h2 class="mt">2. Chart options</h2>
+      <div class="field"><label for="type">Chart type</label><select id="type"><option value="bar">Bar (vertical)</option><option value="hbar">Bar (horizontal)</option><option value="stacked">Stacked bar</option><option value="line">Line</option><option value="area">Area</option><option value="pie">Pie</option><option value="doughnut">Doughnut</option><option value="scatter">Scatter</option><option value="radar">Radar</option></select></div>
+      <div class="field"><label for="x">Label / X column</label><select id="x"></select></div>
+      <div class="field"><label>Value / Y columns</label><div class="y-cols" id="ys"><span class="muted">Load data first</span></div></div>
+      <div class="field"><label for="title">Chart title</label><input id="title" value=""></div>
+      <div class="field-row"><div class="field"><label for="pal">Palette</label><select id="pal"><option value="studio">Studio</option><option value="ocean">Ocean</option><option value="sunset">Sunset</option><option value="mono">Mono</option></select></div><div class="field"><label for="sort">Sort</label><select id="sort"><option value="">As is</option><option value="desc">Largest first</option><option value="asc">Smallest first</option></select></div></div>
+    </div>
+    <div>
+      <div class="panel">
+        <div class="toolbar"><button id="png" class="btn btn-brand btn-sm" type="button">⬇ Download PNG</button><span class="muted" id="info" style="font-size:.88rem"></span></div>
+        <div class="chart-box"><canvas id="cv" aria-label="Chart preview" role="img"></canvas></div>
+      </div>
+      <div class="panel mt-s"><h3>Data preview</h3><div class="table-wrap" id="preview"><p class="muted" style="padding:12px">No data yet. Load the sample to see how it works.</p></div></div>
+    </div>
+  </div>
+</section>
+<section class="section section-alt">
+  <div class="wrap prose">
+    <h2 style="margin-top:0">How to make a chart from CSV</h2>
+    <ol>
+      <li><strong>Add your data.</strong> Drop a .csv file or paste rows copied from a spreadsheet. The first row must contain column names. Commas, semicolons and tabs are detected automatically.</li>
+      <li><strong>Choose a chart type.</strong> Use bars to compare categories, lines or areas for change over time, pie or doughnut for a few parts of a whole, scatter for the relationship between two numbers, and radar for profiles across several measures. Unsure? Use the <a href="../chart-guide.html">Chart Guide</a>.</li>
+      <li><strong>Pick columns.</strong> The label column becomes the axis categories. Tick one or more numeric value columns to plot as series.</li>
+      <li><strong>Refine and export.</strong> Add a title that states the takeaway, sort bars by size, choose a palette, and download a high-resolution PNG with a white background.</li>
+    </ol>
+    <h3>Tips for clearer charts</h3>
+    <ul>
+      <li>Bar charts should start at zero. Ours always do, so differences aren't exaggerated.</li>
+      <li>Limit pies to five or six slices. More than that, a sorted bar chart reads faster.</li>
+      <li>Write titles as findings ("Profit doubled from January to June") rather than labels ("Profit by month").</li>
+    </ul>
+    <div class="callout"><strong>Privacy:</strong> your data never leaves this browser tab. Charts are drawn locally with the open-source Chart.js library.</div>
+  </div>
+</section>
+<div class="sticky-cta"><span>Need branded, auto-updating charts for your business?</span><a class="btn btn-brand btn-sm" href="../services.html?service=Dashboard#brief">Get a dashboard built</a><button class="x" aria-label="Dismiss">×</button></div>
+</main>
+<footer id="site-footer"></footer>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/site.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="../assets/js/tools.js"></script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  var csv=$('csv'),xSel=$('x'),ys=$('ys'),info=$('info'),data={rows:[],fields:[]},chart=null;
+  var SAMPLE='Month,Revenue,Costs,Profit\nJan,42000,30500,11500\nFeb,45500,31200,14300\nMar,51200,33800,17400\nApr,49800,34100,15700\nMay,56300,35900,20400\nJun,61700,37200,24500';
+  var whiteBg={id:'whiteBg',beforeDraw:function(c){var x=c.ctx;x.save();x.globalCompositeOperation='destination-over';x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.restore();}};
+  function hexA(h,a){var n=parseInt(h.slice(1),16);return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')';}
+  function numeric(f){var v=data.rows.slice(0,80).map(function(r){return r[f];}).filter(function(v){return !DST.isEmpty(v);});return v.length&&v.filter(function(x){return DST.toNum(x)!==null;}).length/v.length>=0.8;}
+  function load(){
+    data=DST.parse(csv.value);
+    if(!data.fields.length||!data.rows.length){info.textContent='Could not read any rows. Check that the first line has headers.';return;}
+    var nums=data.fields.filter(numeric),cats=data.fields.filter(function(f){return nums.indexOf(f)<0;});
+    xSel.innerHTML=data.fields.map(function(f){return '<option>'+DS.esc(f)+'</option>';}).join('');
+    xSel.value=cats[0]||data.fields[0];
+    ys.innerHTML=nums.length?nums.map(function(f,i){return '<label><input type="checkbox" value="'+DS.esc(f)+'"'+(i<3&&f!==xSel.value?' checked':'')+'> '+DS.esc(f)+'</label>';}).join(''):'<span class="muted">No numeric columns found</span>';
+    if(!$('title').value)$('title').value=nums.slice(0,2).join(' & ')+(cats[0]?' by '+cats[0]:'');
+    $('preview').innerHTML=DST.table(data.rows,data.fields,100);
+    draw();
+  }
+  function draw(){
+    if(!data.rows.length)return;
+    var t=$('type').value,xf=xSel.value,yf=[].map.call(ys.querySelectorAll('input:checked'),function(i){return i.value;});
+    if(!yf.length){info.textContent='Tick at least one value column.';return;}
+    var rows=data.rows.slice();
+    if($('sort').value){rows.sort(function(a,b){return (DST.toNum(a[yf[0]])||0)-(DST.toNum(b[yf[0]])||0);});if($('sort').value==='desc')rows.reverse();}
+    var limit=(t==='pie'||t==='doughnut')?24:2000;rows=rows.slice(0,limit);
+    var pal=DST.palettes[$('pal').value],type={hbar:'bar',stacked:'bar',area:'line'}[t]||t,ds;
+    if(t==='scatter'){ds=yf.map(function(f,i){return {label:f,data:rows.map(function(r){return {x:DST.toNum(r[xf]),y:DST.toNum(r[f])};}).filter(function(p){return p.x!==null&&p.y!==null;}),backgroundColor:hexA(pal[i%pal.length],.75),pointRadius:4};});}
+    else if(t==='pie'||t==='doughnut'){ds=[{label:yf[0],data:rows.map(function(r){return DST.toNum(r[yf[0]]);}),backgroundColor:rows.map(function(_,i){return pal[i%pal.length];}),borderColor:'#fff',borderWidth:2}];}
+    else{ds=yf.map(function(f,i){var c=pal[i%pal.length],line=(t==='line'||t==='area'||t==='radar');return {label:f,data:rows.map(function(r){return DST.toNum(r[f]);}),backgroundColor:line?hexA(c,.18):c,borderColor:c,borderWidth:line?2.5:0,fill:t==='area'||t==='radar',tension:.3,pointRadius:rows.length>60?0:3,borderRadius:type==='bar'?6:0};});}
+    var opts={responsive:true,maintainAspectRatio:false,animation:{duration:300},plugins:{title:{display:!!$('title').value,text:$('title').value,font:{size:16,weight:'700'},color:'#151B2E'},legend:{display:ds.length>1||t==='pie'||t==='doughnut',position:'bottom'}}};
+    if(t==='hbar')opts.indexAxis='y';
+    if(t==='stacked')opts.scales={x:{stacked:true},y:{stacked:true,beginAtZero:true}};
+    else if(t==='scatter')opts.scales={x:{type:'linear',title:{display:true,text:xf}},y:{title:{display:true,text:yf.join(', ')}}};
+    else if(type==='bar'||type==='line')opts.scales={y:{beginAtZero:type==='bar'}};
+    if(chart)chart.destroy();
+    chart=new Chart($('cv'),{type:type,data:{labels:t==='scatter'?undefined:rows.map(function(r){return r[xf];}),datasets:ds},options:opts,plugins:[whiteBg]});
+    info.textContent=data.rows.length.toLocaleString()+' rows · '+data.fields.length+' columns'+(data.rows.length>limit?' · showing first '+limit:'');
+  }
+  DST.dropzone($('dz'),csv,load);
+  $('sample').onclick=function(){csv.value=SAMPLE;$('title').value='';load();};
+  $('load').onclick=load;
+  ['type','x','title','pal','sort'].forEach(function(id){$(id).addEventListener('input',draw);});
+  ys.addEventListener('change',draw);
+  $('png').onclick=function(){if(!chart){info.textContent='Make a chart first.';return;}var a=document.createElement('a');a.href=chart.toBase64Image('image/png',1);a.download=($('title').value||'chart').replace(/[^\w\-]+/g,'-').toLowerCase()+'.png';a.click();};
+  var q=new URLSearchParams(location.search).get('type');if(q&&$('type').querySelector('option[value="'+q+'"]'))$('type').value=q;
+  csv.value=SAMPLE;load();
+})();
+</script>
+</body>
+</html>
