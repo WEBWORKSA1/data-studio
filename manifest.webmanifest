@@ -1,0 +1,9 @@
+{
+  "name": "Data.Studio — The free studio for working with data",
+  "short_name": "Data.Studio",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0A0F1F",
+  "theme_color": "#5B5BF7",
+  "icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

@@ -1,0 +1,47 @@
+# Move this file to .github/workflows/update-data.yml (GitHub web UI: Add file > Create new file,
+# name it .github/workflows/update-data.yml, paste this content, commit to main).
+# Then Settings > Actions > General > Workflow permissions > Read and write permissions.
+name: Update live data
+
+on:
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'data/**'
+      - 'sitemap.xml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Refresh data feeds
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/update-data.mjs
+      - name: Commit changes
+        run: |
+          git config user.name "data-studio-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data sitemap.xml
+          if git diff --staged --quiet; then
+            echo "No changes"
+          else
+            git commit -m "chore(data): auto-refresh live feeds $(date -u +%Y-%m-%dT%H:%MZ)"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
