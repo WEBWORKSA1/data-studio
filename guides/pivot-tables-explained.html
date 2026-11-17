@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pivot Tables Explained: Rows, Columns, Values & Aggregations | Data.Studio</title>
+<meta name="description" content="Learn how pivot tables work: rows, columns, values and aggregations, grand totals, distinct counts, and the traps of averaging averages, with worked examples.">
+<link rel="canonical" href="https://data.studio/guides/pivot-tables-explained.html">
+<meta property="og:type" content="article"><meta property="og:title" content="Pivot tables explained"><meta property="og:url" content="https://data.studio/guides/pivot-tables-explained.html"><meta property="og:site_name" content="Data.Studio">
+<meta name="theme-color" content="#0A0F1F">
+<meta name="google-adsense-account" content="ca-pub-6620975821265271">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6620975821265271" crossorigin="anonymous"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Pivot tables explained","author":{"@type":"Organization","name":"Data.Studio Editorial"},"publisher":{"@type":"Organization","name":"Data.Studio"},"datePublished":"2026-11-17","dateModified":"2026-11-17"}</script>
+</head>
+<body data-root="../">
+<div class="topbar"><a href="https://web.works/contact" target="_blank" rel="noopener">Contact, if you are interested in this website / domain name / Sponsorship / Advertisement / Partnership →</a></div>
+<header id="site-header"></header>
+<main id="main">
+<section class="page-hero"><div class="wrap">
+  <div class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Guides</a> / Analysis</div>
+  <h1>Pivot tables explained</h1>
+  <p>The fastest way to turn thousands of rows into an answer. Once you see how the four building blocks fit together, you'll use pivots everywhere.</p>
+  <p class="meta-line">Data.Studio Editorial · Updated November 2026 · 7 min read</p>
+</div></section>
+<section class="section"><div class="wrap article">
+<article class="prose">
+<h2 style="margin-top:0">The idea in one sentence</h2>
+<p>A pivot table <strong>groups</strong> rows that share values in one or more columns, then <strong>aggregates</strong> a numeric column for each group. "Total revenue by region" is a pivot. So is "number of support tickets by agent and week".</p>
+
+<h2>The four building blocks</h2>
+<ul>
+<li><strong>Rows</strong>: the field whose values become row labels (Region).</li>
+<li><strong>Columns</strong>: an optional second field spread across the top (Quarter). This creates a cross-tab.</li>
+<li><strong>Values</strong>: the field being measured (Revenue).</li>
+<li><strong>Aggregation</strong>: how values are combined: sum, count, average, minimum, maximum or distinct count.</li>
+</ul>
+<p>Given an orders table like this:</p>
+<table>
+<thead><tr><th>Region</th><th>Quarter</th><th>Product</th><th>Revenue</th></tr></thead>
+<tbody><tr><td>North</td><td>Q1</td><td>Laptop</td><td>12,000</td></tr><tr><td>North</td><td>Q2</td><td>Laptop</td><td>15,000</td></tr><tr><td>South</td><td>Q1</td><td>Phone</td><td>7,200</td></tr><tr><td>South</td><td>Q2</td><td>Phone</td><td>8,000</td></tr></tbody></table>
+<p>…a pivot with Rows = Region, Columns = Quarter and Values = Sum of Revenue produces:</p>
+<table>
+<thead><tr><th>Region</th><th>Q1</th><th>Q2</th><th>Total</th></tr></thead>
+<tbody><tr><td>North</td><td>12,000</td><td>15,000</td><td>27,000</td></tr><tr><td>South</td><td>7,200</td><td>8,000</td><td>15,200</td></tr><tr><td><strong>Grand total</strong></td><td>19,200</td><td>23,000</td><td>42,200</td></tr></tbody></table>
+
+<h2>Choosing the right aggregation</h2>
+<ul>
+<li><strong>Sum</strong> for additive measures: revenue, units, hours.</li>
+<li><strong>Count</strong> for "how many records": orders, tickets, sign-ups. It counts non-empty cells, so pick a column that's always filled, like an ID.</li>
+<li><strong>Distinct count</strong> for "how many unique": customers, products, visitors. Ten orders from three customers is a count of 10 but a distinct count of 3.</li>
+<li><strong>Average</strong> for typical values: order value, response time. Watch out for the trap below.</li>
+<li><strong>Min / Max</strong> for extremes and date ranges: first order date, largest deal.</li>
+</ul>
+
+<h2>The average-of-averages trap</h2>
+<p>Suppose Store A has 1,000 orders averaging $20 and Store B has 10 orders averaging $200. The average of the two store averages is $110. The true average order value across all 1,010 orders is about $21.78. A correct pivot computes grand totals from the underlying rows, not by averaging the row results, and so does our <a href="../tools/pivot-table.html">Pivot Table tool</a>. If you rebuild totals by hand in a spreadsheet, recompute them from the raw data.</p>
+<p>The same applies to rates. Never average conversion rates across segments. Divide total conversions by total visitors.</p>
+
+<h2>Practical tips</h2>
+<ul>
+<li><strong>Clean categories first.</strong> "North" and "north " become two rows. Run the <a href="../tools/data-cleaner.html">Data Cleaner</a> to trim and standardise.</li>
+<li><strong>Watch blanks.</strong> Empty values form their own "(blank)" group. Decide whether that's meaningful or a data gap.</li>
+<li><strong>Sort by the measure</strong> to turn a pivot into a ranking. Sort by the label when order is natural (months, sizes).</li>
+<li><strong>Keep the grain in mind.</strong> If your table has one row per order line, counting rows counts lines, not orders. Use distinct count on order ID.</li>
+<li><strong>Pivot, then chart.</strong> A pivot is often the perfect input for a bar or line chart. Export the CSV and drop it into the <a href="../tools/chart-maker.html">Chart Maker</a>.</li>
+</ul>
+
+<h2>When to move beyond pivots</h2>
+<p>Pivots are perfect for ad-hoc questions. If you rebuild the same pivot every week from a fresh export, that's a signal to automate it with a scheduled query and a dashboard, so the answer is always up to date and nobody's Monday morning disappears into copy-paste.</p>
+<div class="callout"><strong>Try it:</strong> open the <a href="../tools/pivot-table.html">Pivot Table</a>, load the sample, and switch between Sum, Count, Average and Distinct count to see how the answers change.</div>
+</article>
+<aside class="aside-sticky">
+  <div class="card"><h3 style="margin-top:0">Build a pivot now</h3><p>Free, private, exports to CSV.</p><a class="btn btn-brand btn-sm mt-s" href="../tools/pivot-table.html">Open Pivot Table</a></div>
+  <div class="card" style="background:var(--ink);border-color:var(--ink)"><h3 style="margin-top:0;color:#fff">Same report every week?</h3><p style="color:#B9C0DA">We'll automate it into a live dashboard.</p><a class="btn btn-teal btn-sm mt-s" href="../services.html?service=Automation#brief">Automate it</a></div>
+  <div class="card"><h3 style="margin-top:0">Related</h3><div class="toc"><a href="descriptive-statistics-primer.html">Descriptive statistics primer</a><a href="kpi-dashboard-design.html">KPI dashboard design</a><a href="data-cleaning-checklist.html">Data cleaning checklist</a></div></div>
+</aside>
+</div></section>
+</main>
+<footer id="site-footer"></footer>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/site.js"></script>
+</body>
+</html>

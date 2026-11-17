@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finding and Evaluating Open Data: Sources, Quality & Licences | Data.Studio</title>
+<meta name="description" content="Where to find trustworthy open data, how to evaluate a dataset's quality, methodology and licence before using it, and how to cite it properly.">
+<link rel="canonical" href="https://data.studio/guides/finding-and-evaluating-open-data.html">
+<meta property="og:type" content="article"><meta property="og:title" content="Finding and evaluating open data"><meta property="og:url" content="https://data.studio/guides/finding-and-evaluating-open-data.html"><meta property="og:site_name" content="Data.Studio">
+<meta name="theme-color" content="#0A0F1F">
+<meta name="google-adsense-account" content="ca-pub-6620975821265271">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6620975821265271" crossorigin="anonymous"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Finding and evaluating open data","author":{"@type":"Organization","name":"Data.Studio Editorial"},"publisher":{"@type":"Organization","name":"Data.Studio"},"datePublished":"2026-11-17","dateModified":"2026-11-17"}</script>
+</head>
+<body data-root="../">
+<div class="topbar"><a href="https://web.works/contact" target="_blank" rel="noopener">Contact, if you are interested in this website / domain name / Sponsorship / Advertisement / Partnership →</a></div>
+<header id="site-header"></header>
+<main id="main">
+<section class="page-hero"><div class="wrap">
+  <div class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Guides</a> / Open data</div>
+  <h1>Finding and evaluating open data</h1>
+  <p>There's more free data than ever. The skill is no longer finding <em>a</em> dataset but finding one you can trust, and knowing what it can and can't tell you.</p>
+  <p class="meta-line">Data.Studio Editorial · Updated November 2026 · 8 min read</p>
+</div></section>
+<section class="section"><div class="wrap article">
+<article class="prose">
+<h2 style="margin-top:0">Where to look, in order</h2>
+<ol>
+<li><strong>The primary publisher.</strong> National statistics offices, central banks, international organisations (World Bank, IMF, OECD, WHO, UN) and government open-data portals. Primary sources document their methods and publish revisions.</li>
+<li><strong>Curated secondary sources.</strong> Organisations such as Our World in Data or Gapminder harmonise many primary sources into consistent long-run series, and they document what they changed.</li>
+<li><strong>Research repositories.</strong> Zenodo, Dryad, Harvard Dataverse and ICPSR host data behind published research, often with a DOI for citation.</li>
+<li><strong>Community platforms.</strong> Kaggle and Hugging Face host thousands of datasets of varying quality. Excellent for practice and machine learning, but check provenance carefully.</li>
+<li><strong>Dataset search engines.</strong> Google Dataset Search indexes dataset descriptions across the web. Use it to discover, then go to the original publisher.</li>
+</ol>
+<p>Our <a href="../datasets.html">open datasets directory</a> lists 40+ of the most useful sources with formats and licence notes.</p>
+
+<h2>The evaluation checklist</h2>
+<h3>Provenance: who made it and how?</h3>
+<p>Can you name the organisation that collected the data and find its methodology? Survey data needs a sampling method and sample size. Administrative data needs the rules for what gets recorded. Scraped data needs to say what was scraped and when. If you can't trace a dataset to a responsible publisher, treat it as unverified.</p>
+<h3>Definitions: does it measure what you think?</h3>
+<p>"Unemployment", "poverty" and "active user" all have competing definitions. Read the indicator notes. Two countries reporting the "same" metric may count it differently, and definitions change over time, creating breaks in series.</p>
+<h3>Coverage: what's missing?</h3>
+<p>Which years, regions and groups are included? Are some countries missing in some years? Are small businesses excluded? Gaps aren't errors, but conclusions shouldn't extend beyond what's covered.</p>
+<h3>Timeliness and revisions</h3>
+<p>Official statistics are often revised as better information arrives. GDP figures, for example, can change noticeably after first release. Note the release or download date, and expect figures to change.</p>
+<h3>Granularity</h3>
+<p>Annual national averages can't answer questions about monthly city-level patterns. Check the time and geographic resolution before you invest effort.</p>
+<h3>Quality signals</h3>
+<p>Profile the file before analysis: missing values, duplicates, impossible values (negative ages, percentages over 100), sudden jumps. Our <a href="../tools/data-profiler.html">Data Profiler</a> does this in seconds.</p>
+
+<h2>Licences in plain English</h2>
+<table>
+<thead><tr><th>Licence</th><th>What it generally allows</th><th>Main obligation</th></tr></thead>
+<tbody>
+<tr><td>Public domain / CC0</td><td>Any use, including commercial</td><td>None (attribution still good practice)</td></tr>
+<tr><td>CC BY 4.0</td><td>Any use, including commercial</td><td>Credit the source</td></tr>
+<tr><td>Open Government Licences (UK, Canada, etc.)</td><td>Broad reuse</td><td>Attribution statement</td></tr>
+<tr><td>ODbL (e.g. OpenStreetMap)</td><td>Use and adapt</td><td>Attribution, and share derived databases under ODbL</td></tr>
+<tr><td>CC BY-NC</td><td>Non-commercial use only</td><td>Credit, no commercial use</td></tr>
+<tr><td>Custom terms</td><td>Varies</td><td>Read them, especially for commercial products</td></tr>
+</tbody></table>
+<p>This is general information, not legal advice. When building a commercial product on someone else's data, read the full terms.</p>
+
+<h2>How to cite a dataset</h2>
+<p>A good citation lets someone else find exactly what you used: <em>Publisher (year). Dataset title, version or release. URL or DOI. Accessed date.</em> For example: <em>World Bank (2026). World Development Indicators. https://data.worldbank.org. Accessed 17 November 2026.</em> Put the source line directly under any chart you publish. It's also one of the judging criteria in our <a href="../contests.html">Data Viz Challenge</a>.</p>
+
+<div class="callout"><strong>Start exploring:</strong> pick a source from the <a href="../datasets.html">datasets directory</a>, profile it, and enter this month's <a href="../contests.html">Data Viz Challenge</a>.</div>
+</article>
+<aside class="aside-sticky">
+  <div class="card"><h3 style="margin-top:0">Browse sources</h3><p>40+ curated open data sources.</p><a class="btn btn-brand btn-sm mt-s" href="../datasets.html">Open directory</a></div>
+  <div class="card" style="background:var(--ink);border-color:var(--ink)"><h3 style="margin-top:0;color:#fff">Need market data analysed?</h3><p style="color:#B9C0DA">Research projects with clear readouts.</p><a class="btn btn-teal btn-sm mt-s" href="../services.html?service=Analysis#brief">Request analysis</a></div>
+  <div class="card"><h3 style="margin-top:0">Related</h3><div class="toc"><a href="data-cleaning-checklist.html">Data cleaning checklist</a><a href="data-formats-csv-json-parquet.html">CSV vs JSON vs Parquet</a><a href="../live.html">Live data</a></div></div>
+</aside>
+</div></section>
+</main>
+<footer id="site-footer"></footer>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/site.js"></script>
+</body>
+</html>

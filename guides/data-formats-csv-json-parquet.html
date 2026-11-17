@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSV vs JSON vs Parquet: Which Data Format Should You Use? | Data.Studio</title>
+<meta name="description" content="Compare CSV, JSON, Parquet and Excel files: structure, size, speed, typing and tooling. Learn which data format to use for spreadsheets, APIs, analytics and archives.">
+<link rel="canonical" href="https://data.studio/guides/data-formats-csv-json-parquet.html">
+<meta property="og:type" content="article"><meta property="og:title" content="CSV vs JSON vs Parquet"><meta property="og:url" content="https://data.studio/guides/data-formats-csv-json-parquet.html"><meta property="og:site_name" content="Data.Studio">
+<meta name="theme-color" content="#0A0F1F">
+<meta name="google-adsense-account" content="ca-pub-6620975821265271">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6620975821265271" crossorigin="anonymous"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"CSV vs JSON vs Parquet: which data format should you use?","author":{"@type":"Organization","name":"Data.Studio Editorial"},"publisher":{"@type":"Organization","name":"Data.Studio"},"datePublished":"2026-11-17","dateModified":"2026-11-17"}</script>
+</head>
+<body data-root="../">
+<div class="topbar"><a href="https://web.works/contact" target="_blank" rel="noopener">Contact, if you are interested in this website / domain name / Sponsorship / Advertisement / Partnership →</a></div>
+<header id="site-header"></header>
+<main id="main">
+<section class="page-hero"><div class="wrap">
+  <div class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Guides</a> / Engineering</div>
+  <h1>CSV vs JSON vs Parquet</h1>
+  <p>The format you store data in affects file size, speed, accuracy and who can open it. Here's how to choose.</p>
+  <p class="meta-line">Data.Studio Editorial · Updated November 2026 · 7 min read</p>
+</div></section>
+<section class="section"><div class="wrap article">
+<article class="prose">
+<h2 style="margin-top:0">At a glance</h2>
+<table>
+<thead><tr><th></th><th>CSV</th><th>JSON</th><th>Parquet</th><th>Excel (.xlsx)</th></tr></thead>
+<tbody>
+<tr><td><strong>Shape</strong></td><td>Flat table</td><td>Nested objects & arrays</td><td>Table (supports nested types)</td><td>Sheets of cells</td></tr>
+<tr><td><strong>Human-readable</strong></td><td>Yes</td><td>Yes</td><td>No (binary)</td><td>In Excel</td></tr>
+<tr><td><strong>Data types</strong></td><td>None, everything is text</td><td>String, number, boolean, null</td><td>Rich, enforced schema</td><td>Cell-level, often inconsistent</td></tr>
+<tr><td><strong>Size</strong></td><td>Medium</td><td>Large (keys repeat)</td><td>Small (columnar + compressed)</td><td>Medium</td></tr>
+<tr><td><strong>Analytic speed</strong></td><td>Slow on big files</td><td>Slow on big files</td><td>Very fast</td><td>Slow, row limit ~1M</td></tr>
+<tr><td><strong>Best for</strong></td><td>Exchange, spreadsheets</td><td>APIs, configs, documents</td><td>Analytics, data lakes</td><td>Business users, formatting</td></tr>
+</tbody></table>
+
+<h2>CSV: the universal handshake</h2>
+<p>Comma-separated values is the lowest common denominator. Every spreadsheet, database and programming language can read it. That universality is why open-data portals publish CSV first.</p>
+<p>Its weaknesses all stem from having no schema. A CSV doesn't know that <code>00501</code> is a ZIP code, not the number 501. It has no standard for dates, encodings or even delimiters (much of Europe uses semicolons because the comma is the decimal separator). Quoting rules (RFC 4180) handle commas and line breaks inside fields, but hand-made files often break them. Always specify UTF-8 encoding and an unambiguous date format when you publish CSV.</p>
+
+<h2>JSON: structure for applications</h2>
+<p>JSON represents nested structure naturally: an order containing a customer object and an array of line items. That's why almost every web API speaks JSON. It distinguishes numbers, strings, booleans and null, which removes some of CSV's ambiguity.</p>
+<p>The cost is size and flatness. Field names repeat in every record, and analysis tools usually want a flat table. Converting JSON to a table means <strong>flattening</strong>: nested keys become dotted column names (<code>customer.country</code>), and arrays either become separate rows or stay as text. Our <a href="../tools/csv-json-converter.html">CSV ⇄ JSON Converter</a> flattens automatically.</p>
+<p><strong>Variant: JSON Lines (NDJSON)</strong> stores one JSON object per line. It's ideal for logs and streaming, because files can be appended to and processed line by line.</p>
+
+<h2>Parquet: built for analytics</h2>
+<p>Apache Parquet stores data <strong>by column</strong> rather than by row. When a query needs only three of fifty columns, it reads only those three. Similar values sit together, so compression is excellent. Files are often a fraction of the size of the equivalent CSV. Parquet also stores a schema, so types survive the round trip.</p>
+<p>Parquet is the default for data lakes and is read natively by modern engines and libraries (Spark, DuckDB, pandas, Polars and cloud warehouses). The trade-off: you can't open it in a text editor or a basic spreadsheet, so it's a poor choice for sharing with non-technical colleagues.</p>
+
+<h2>Excel: the business interface</h2>
+<p>Spreadsheets are where most business data starts and ends. They support formatting, formulas and multiple sheets. They're also where merged cells, hidden rows, inconsistent types and silent auto-conversion (gene names turned into dates is a famous example) creep in. Treat .xlsx as a presentation format and keep a clean, typed source of truth elsewhere.</p>
+
+<h2>How to choose</h2>
+<ul>
+<li><strong>Sharing a table with anyone, anywhere?</strong> CSV, UTF-8, ISO dates, with a short README describing columns.</li>
+<li><strong>Feeding a web app or API?</strong> JSON.</li>
+<li><strong>Logs or event streams?</strong> JSON Lines.</li>
+<li><strong>Millions of rows for analysis?</strong> Parquet.</li>
+<li><strong>Handing a report to a manager?</strong> Excel or a dashboard, generated from a clean source.</li>
+</ul>
+<div class="callout teal"><strong>Convert now:</strong> switch between CSV and JSON in your browser with the <a href="../tools/csv-json-converter.html">CSV ⇄ JSON Converter</a>, then check types and gaps with the <a href="../tools/data-profiler.html">Data Profiler</a>.</div>
+</article>
+<aside class="aside-sticky">
+  <div class="card"><h3 style="margin-top:0">Convert formats</h3><p>CSV ⇄ JSON with flattening and typing.</p><a class="btn btn-brand btn-sm mt-s" href="../tools/csv-json-converter.html">Open converter</a></div>
+  <div class="card" style="background:var(--ink);border-color:var(--ink)"><h3 style="margin-top:0;color:#fff">Building a data pipeline?</h3><p style="color:#B9C0DA">Analytics engineers who design for scale.</p><a class="btn btn-teal btn-sm mt-s" href="../services.html?service=Automation#brief">Get a proposal</a></div>
+  <div class="card"><h3 style="margin-top:0">Related</h3><div class="toc"><a href="data-cleaning-checklist.html">Data cleaning checklist</a><a href="finding-and-evaluating-open-data.html">Evaluating open data</a><a href="../glossary.html#parquet">Glossary: Parquet</a></div></div>
+</aside>
+</div></section>
+</main>
+<footer id="site-footer"></footer>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/site.js"></script>
+</body>
+</html>
