@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Viz Challenge — Monthly Data Visualization Contest | Data.Studio</title>
+<meta name="description" content="Enter the monthly Data.Studio Data Viz Challenge. One theme, one chart, one story. Get featured and compete for sponsor-funded prizes. Free to enter.">
+<link rel="canonical" href="https://data.studio/contests.html">
+<meta property="og:title" content="The Data Viz Challenge | Data.Studio"><meta property="og:description" content="Monthly data visualization contest. Free to enter."><meta property="og:url" content="https://data.studio/contests.html"><meta property="og:site_name" content="Data.Studio">
+<meta name="theme-color" content="#0A0F1F">
+<meta name="google-adsense-account" content="ca-pub-6620975821265271">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6620975821265271" crossorigin="anonymous"></script>
+</head>
+<body data-root="./">
+<div class="topbar"><a href="https://web.works/contact" target="_blank" rel="noopener">Contact, if you are interested in this website / domain name / Sponsorship / Advertisement / Partnership →</a></div>
+<header id="site-header"></header>
+<main id="main">
+<section class="hero" style="padding:64px 0">
+  <div class="wrap grid g2" style="align-items:center">
+    <div>
+      <span class="eyebrow">Monthly · Free to enter · Skill-based</span>
+      <h1 style="font-size:clamp(2.1rem,4.4vw,3.3rem)">The Data Viz Challenge</h1>
+      <p class="lead">One theme. One visualization. One clear story. Show what you can do with public data and get featured in front of thousands of data people.</p>
+      <p style="font-size:1.1rem;margin:0 0 6px">This month's theme</p>
+      <p style="font-size:1.6rem;font-weight:800;margin:0 0 20px" id="theme" class="grad">—</p>
+      <a class="btn btn-teal" href="#enter">Submit your entry →</a>
+    </div>
+    <div>
+      <p style="color:#B9C0DA;margin:0 0 10px">Entries close in</p>
+      <div class="countdown" id="cd"><div><b id="cd-d">0</b><span>days</span></div><div><b id="cd-h">0</b><span>hours</span></div><div><b id="cd-m">0</b><span>min</span></div></div>
+      <p style="color:#8F98BC;font-size:.88rem;margin-top:12px">Deadline: <span id="deadline"></span>, 23:59 UTC</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><div><span class="eyebrow">Prizes</span><h2>What winners get</h2><p id="prize-note"></p></div></div>
+    <div class="grid g3" id="prizes"></div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="wrap grid g2">
+    <div>
+      <span class="eyebrow">How it works</span>
+      <h2>Four steps to enter</h2>
+      <ol class="steps-list mt">
+        <li><strong>Pick a public dataset</strong> on the theme. Our <a href="datasets.html">dataset directory</a> is a good start.</li>
+        <li><strong>Make one visualization.</strong> Any tool is fine: our <a href="tools/chart-maker.html">Chart Maker</a>, a spreadsheet, code or a BI tool.</li>
+        <li><strong>Publish it</strong> anywhere with a public link (your blog, a social post, a public gallery or a GitHub page).</li>
+        <li><strong>Submit the link</strong> with a 2–4 sentence story below before the deadline.</li>
+      </ol>
+    </div>
+    <div>
+      <span class="eyebrow">Judging</span>
+      <h2>How entries are scored</h2>
+      <table class="data" style="background:#fff;border:1px solid var(--line);border-radius:12px">
+        <thead><tr><th>Criterion</th><th class="num">Weight</th></tr></thead>
+        <tbody>
+          <tr><td>Clarity: is the main message obvious in 5 seconds?</td><td class="num">30%</td></tr>
+          <tr><td>Accuracy: honest scales, sourced data, correct maths</td><td class="num">25%</td></tr>
+          <tr><td>Insight: does it reveal something non-obvious?</td><td class="num">25%</td></tr>
+          <tr><td>Design: typography, colour, accessibility</td><td class="num">20%</td></tr>
+        </tbody>
+      </table>
+      <p class="form-note">Scored by a panel of Data.Studio editors and guest judges. Winners announced within 14 days of the deadline.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="enter">
+  <div class="wrap grid g2" style="align-items:start">
+    <div class="panel" style="padding:26px">
+      <h2 style="margin-top:0">Submit your entry</h2>
+      <form data-ds-form="Contest Entry" data-success="Your entry is in! We'll confirm by email and announce winners within 14 days of the deadline.">
+        <input type="hidden" name="contest_theme" id="f-theme">
+        <div class="form-grid">
+          <div><label for="c-name">Name or handle</label><input id="c-name" name="name" required></div>
+          <div><label for="c-email">Email</label><input id="c-email" name="email" type="email" required></div>
+          <div class="full"><label for="c-title">Entry title</label><input id="c-title" name="entry_title" required></div>
+          <div class="full"><label for="c-link">Public link to your visualization</label><input id="c-link" name="entry_url" type="url" placeholder="https://" required></div>
+          <div class="full"><label for="c-data">Data source(s) used</label><input id="c-data" name="data_source" placeholder="e.g. World Bank WDI, 2024 release" required></div>
+          <div class="full"><label for="c-story">Your story (2–4 sentences)</label><textarea id="c-story" name="story" required></textarea></div>
+          <div><label for="c-country">Country</label><input id="c-country" name="country" required></div>
+          <div><label for="c-social">Social / portfolio (optional)</label><input id="c-social" name="portfolio"></div>
+          <div class="full"><label class="check"><input type="checkbox" name="age_18" value="Yes" required> I am 18 or older and this is my original work</label></div>
+          <div class="full"><label class="check"><input type="checkbox" name="rules" value="Accepted" required> I accept the <a href="#rules">official rules</a> and allow Data.Studio to feature my entry with credit</label></div>
+          <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off">
+          <div class="full"><button class="btn btn-brand" type="submit" style="width:100%">Submit entry</button></div>
+        </div>
+      </form>
+    </div>
+    <div>
+      <div class="card"><span class="eyebrow" style="color:var(--brand)">Sponsors</span><h3>Put your brand on a challenge</h3><p>Sponsors fund the prize pool and get naming rights, a logo on this page, a newsletter feature and a judge's seat.</p><a class="btn btn-brand mt-s" href="advertise.html?interest=Contest%20sponsorship">Sponsor a challenge</a></div>
+      <div class="card mt-s"><h3 style="margin-top:0">Upcoming themes</h3><ol id="upcoming" class="muted" style="padding-left:20px;margin:0"></ol></div>
+      <div class="card mt-s"><h3 style="margin-top:0">Get reminded</h3><p>One email when each new challenge opens.</p>
+        <form data-ds-form="Contest Reminder" data-success="Done. We'll email you when the next challenge opens." class="mt-s" style="display:flex;gap:8px"><label class="sr-only" for="r-email">Email</label><input id="r-email" name="email" type="email" placeholder="you@example.com" required><input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off"><button class="btn btn-ghost" type="submit">Notify me</button></form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" id="rules">
+  <div class="wrap narrow prose">
+    <h2 style="margin-top:0">Official rules (summary)</h2>
+    <ul>
+      <li><strong>No purchase necessary.</strong> Entry is free. Payment or donation does not improve your chances.</li>
+      <li><strong>Eligibility:</strong> open to individuals aged 18+ where skill contests are lawful. Void where prohibited. Data.Studio staff and judges may not win prizes.</li>
+      <li><strong>Skill-based:</strong> winners are chosen solely on the published judging criteria. There is no random draw.</li>
+      <li><strong>Entry period:</strong> from the 1st of the month to the last day of the month, 23:59 UTC. One entry per person per challenge.</li>
+      <li><strong>Originality:</strong> entries must be your own work, use data you are allowed to use, and credit the data source.</li>
+      <li><strong>Prizes:</strong> as listed on this page when the challenge opens. Prizes are non-transferable and winners are responsible for any taxes. If a listed prize becomes unavailable, a prize of equal or greater value may be substituted.</li>
+      <li><strong>Licence:</strong> you keep ownership. You grant Data.Studio a non-exclusive licence to display your entry with credit on the site, newsletter and social channels.</li>
+      <li><strong>Privacy:</strong> entry details are used only to run the challenge and contact you. See the <a href="privacy.html">Privacy Policy</a>.</li>
+    </ul>
+  </div>
+</section>
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/site.js"></script>
+<script>
+(function(){
+  var c=DS.config.contest||{},themes=c.themes||[],now=new Date(),m=now.getUTCMonth(),y=now.getUTCFullYear();
+  var theme=themes.length?themes[m%themes.length]:'Open theme';
+  document.getElementById('theme').textContent=theme;document.getElementById('f-theme').value=theme+' ('+now.toLocaleString('en-US',{month:'long',year:'numeric',timeZone:'UTC'})+')';
+  var end=new Date(Date.UTC(y,m+1,0,23,59,59));
+  document.getElementById('deadline').textContent=end.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric',timeZone:'UTC'});
+  function tick(){var s=Math.max(0,(end-Date.now())/1000);document.getElementById('cd-d').textContent=Math.floor(s/86400);document.getElementById('cd-h').textContent=Math.floor(s%86400/3600);document.getElementById('cd-m').textContent=Math.floor(s%3600/60);}
+  tick();setInterval(tick,30000);
+  var pz=c.prizes||[],cls=['amber','gray','teal'];
+  document.getElementById('prizes').innerHTML=pz.map(function(p,i){return '<div class="card"><span class="badge '+(cls[i]||'')+'">'+DS.esc(p.place)+' place</span><h3>'+DS.esc(p.prize)+'</h3><p>Featured on the Data.Studio homepage and newsletter with a link to your portfolio.</p></div>';}).join('');
+  document.getElementById('prize-note').textContent=c.prizeNote||'';
+  var up=document.getElementById('upcoming');for(var i=1;i<=4;i++){var d=new Date(Date.UTC(y,m+i,1));var li=document.createElement('li');li.textContent=d.toLocaleString('en-US',{month:'long',timeZone:'UTC'})+': '+themes[(m+i)%themes.length];up.appendChild(li);}
+})();
+</script>
+</body>
+</html>
